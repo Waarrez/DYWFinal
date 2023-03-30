@@ -1,0 +1,542 @@
+*,::before,::after {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: #22313f;
+}
+
+li {
+    list-style-type: none;
+}
+
+.container {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.container-fluid {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* NAVBAR */
+.logo {
+    width: 17%;
+}
+
+.logo p {
+    font-weight: bold;
+    color: #22313f;
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.logo-your {
+    color: #8dc6ff;
+    font-size: 26px;
+}
+
+.logo-fr {
+    font-size: 20px;
+    color: #8dc6ff;
+}
+
+header {
+    width: 80%;
+    height: 90px;
+    background: #e4f1fe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-radius: 0 0 10px 10px;
+    margin: 0 auto;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li a {
+    color: #22313f;
+    display: block;
+    margin: 0 5px;
+    font-weight: 600;
+    padding: 8px 18px;
+    transition: 0.2s;
+    border-radius: 30px;
+    font-size: 18px;
+}
+
+.icons {
+    margin-right: 10px;
+    padding: 2px;
+    height: 15px;
+}
+
+nav .logo {
+    display: none;
+}
+
+nav ul li a:hover {
+   background: #8dc6ff;
+}
+
+nav ul li a.active {
+    background: #8dc6ff;
+}
+
+.icon-ham {
+    display: none;
+}
+
+.hamburger {
+    display: none;
+    height: fit-content;
+    cursor: pointer;
+    padding: 3px 8px;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.hamburger:hover {
+    background: #8dc6ff;
+}
+
+.hamburger div {
+    width: 30px;
+    height: 2px;
+    margin: 6px 0;
+    background: #22313f;
+}
+
+.separator {
+    height: 45px;
+    width: 4px;
+    margin-right: 10px;
+    margin-left: 5px;
+    background: #22313f;
+    border-radius: 33px;
+    border: none;
+}
+
+.icon-user {
+    color: #22313f;
+    margin: 10px 5px;
+    height: 20px;
+}
+
+/* HOME */
+
+.home-intro {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-intro {
+    margin-top: 20px;
+    width: 40%;
+    color: #22313f;
+}
+
+.text-intro > h2 {
+    font-size: 35px;
+}
+
+.intro-paid {
+    color: #8dc6ff;
+}
+
+.text-intro > p {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.button-intro {
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    background: #22313f;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.button-intro > a {
+    color: #ffffff;
+    font-weight: 600;
+
+}
+
+.button-intro:hover {
+    background: #8dc6ff;
+}
+
+.separator-home {
+    width: 3px;
+    margin-left: 100px;
+    background: #22313f;
+    border: none;
+    border-radius: 33px;
+}
+
+.home-course {
+    margin-top: 50px;
+    padding: 50px;
+    background: #e4f1fe;
+    display: flex;
+}
+
+.home-course-text {
+    margin-left: 10%;
+    width: 40%;
+}
+
+.home-course-text > h2 {
+    text-align: left;
+    font-size: 30px;
+    color: #22313f;
+}
+
+.home-course-text > p {
+    text-align: left;
+    font-size: 22px;
+    color: #22313f;
+}
+
+.home-course-text > p > span {
+    color: #8dc6ff;
+    font-weight: bold;
+}
+
+.home-course-img {
+    text-align: center;
+    height: auto;
+    width: 40%;
+}
+
+.home-course-img > img {
+    width: 70%;
+}
+
+.home-tutorials {
+    margin-top: 50px;
+    padding: 50px;
+}
+
+.home-tutorials-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.home-tutorials > h2 {
+    font-size: 35px;
+    color: #22313f;
+    text-align: center;
+}
+
+.home-tutorials-video {
+    text-align: right;
+    width: 20%;
+    height: 300px;
+    background: #e4f1fe;
+    margin: 30px;
+    box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr 50px;
+}
+
+.home-tutorials-video-img > img {
+    width: 15%;
+    padding: 10px;
+}
+
+.home-tutorials-content {
+    text-align: left;
+    margin: auto auto;
+    padding: 20px;
+}
+
+.home-tutorials-time {
+    margin: auto 0;
+    padding: 15px;
+    background: #8dc6ff;
+    color: #22313f;
+    font-size: 15px;
+}
+
+.home-tutorials-time > p > i {
+    margin-right: 5px;
+}
+
+.home-last-forum {
+
+}
+
+/* FOOTER */
+
+.footer {
+    background: #e4f1fe;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    border-top:5px solid #22313f;
+}
+
+.footer-social,
+.footer-news,
+.footer-contact {
+    text-align: left;
+    padding: 50px;
+    margin: 0 auto;
+    color:  #22313f;
+}
+
+.footer-social > h3,
+.footer-news > h3,
+.footer-contact > h3 {
+    margin: 20px 0;
+}
+
+.footer-social-icons {
+    margin-top: 10px;
+}
+
+.footer-social-icons > a {
+    margin: 5px;
+    color: #22313f;
+}
+
+.social-icons {
+    height: 20px;
+    transition: 0.2s;
+}
+
+.footer-social-icons > a:first-child:hover {
+    color: red;
+}
+
+.footer-social-icons > a:nth-child(2):hover {
+    color: darkviolet;
+}
+
+.footer-social-icons > a:nth-child(3):hover {
+    color: #00ACEE;
+}
+
+.footer-social-icons > a:nth-child(4):hover {
+    color: #171515;
+}
+
+.footer-hebergement {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.footer-hebergement-img {
+    background: #8dc6ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.footer-contact > ul > li > a {
+    color: #22313f;
+    transition: 0.2s;
+}
+
+.footer-contact-icon {
+    margin-right: 5px;
+    margin-top: 15px;
+    height: 15px;
+}
+
+.footer-contact > ul > li > a:hover {
+    color: #8dc6ff;
+}
+
+
+/* FORUM */
+
+.separator-forum {
+    margin: 15px auto;
+    border-radius: 5px;
+}
+
+.separator-sujets-category {
+    width: 80%;
+    margin: 10px 0 20px 0;
+}
+
+.forum-intro {
+    text-align: center;
+    margin: 30px;
+}
+
+.forum-intro > h2 {
+    font-size: 40px;
+    color: #22313f;
+}
+
+.forum-intro > input {
+    border-radius: 3px;
+    border: 2px solid #22313f;
+}
+
+.forum-intro > input {
+    border-radius: 5px;
+    border: 2px solid #22313f;
+    width: 50%;
+    height: 50px;
+    padding: 20px 40px;
+    margin: 30px 0;
+    font-size: 15px;
+    color: #22313f;
+}
+
+.intro-icon {
+    position: absolute;
+    margin-top: 47px;
+    margin-left: 15px;
+}
+
+.forum-intro > input[type=text]:focus {
+    border: none;
+    outline: 2px solid #22313f;
+}
+
+.forum-category {
+    margin: 15px 15px;
+}
+
+.forum-category > a {
+    transition: 0.2s;
+}
+
+
+.forum-category > a:hover {
+    color: rgba(52, 73, 94, 0.5);
+}
+
+.forum-sujets {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 1fr;
+    padding: 50px;
+    background: #e4f1fe;
+    color: #22313f;
+}
+
+.forum-sujets-category {
+    margin: 0 auto;
+}
+
+.forum-sujets-list {
+    width: 80%;
+}
+
+.forum-sujet {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    background: rgba(52, 73, 94, 0.1);
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+    transition: 0.5s;
+}
+
+.forum-sujet:hover {
+    background: rgba(52, 73, 94, 0.3);
+}
+
+.forum-sujet-object {
+    text-align: right;
+}
+
+.icons-forum {
+    margin-left: 15px;
+}
+
+
+@media only screen and (max-width: 1100px) {
+    header {
+        width: 90%;
+        padding: 0 20px;
+    }
+    #nav_check:checked ~ nav {
+        left: 0;
+    }
+    nav {
+        position: absolute;
+        left: -300px;
+        top: 0;
+        z-index: 999;
+        width: 310px;
+        height: 100vh;
+        transition: 0.2s;
+        background-color: #e4f1fe;
+        box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+    }
+    nav ul {
+        display: block;
+        padding: 0 20px;
+        margin-top : 50px;
+    }
+    nav ul li a {
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    nav .logo {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        margin-left: 30px;
+        margin-top: 30px;
+    }
+    .hamburger {
+        display: block;
+    }
+
+    .icon-user {
+        display: none;
+    }
+
+    .icon-ham {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .button-login {
+        display: none;
+    }
+
+    .button-register {
+        display: none;
+    }
+
+    .separator {
+        display: none;
+    }
+}

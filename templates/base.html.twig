@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}DevYourWebsite | {{ title }}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <script src="https://kit.fontawesome.com/42bbb5697c.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -12,8 +17,77 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
-    </head>
-    <body>
+        <body>
+            <header>
+                <div class="logo">
+                    <p>Dev<span class="logo-your">Your</span>Website<span class="logo-fr">.fr</span></p>
+                </div>
+                <input type="checkbox" id="nav_check" hidden/>
+                <nav>
+                    <div class="logo">
+                        <p>Dev<span class="logo-your">Your</span>Website<span class="logo-fr">.fr</span></p>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="{{ path('home.index') }}"><i class="fa-solid fa-house icons" data-turbo></i>Accueil</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('home.forum') }}"><i class="fa-solid fa-comments icons" data-turbo></i>Forum</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fa-brands fa-youtube icons"></i>Tutoriels</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fa-solid fa-video icons"></i>Live</a>
+                        </li>
+                        <hr class="separator"/>
+                        <li>
+                            <a href="">Connexion</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user icon-user"></i>
+                        </li>
+                        <li>
+                            <a href="">Inscription</a>
+                        </li>
+                    </ul>
+                </nav>
+                <label for="nav_check" class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </label>
+            </header>
         {% block body %}{% endblock %}
+        <footer class="footer">
+            <div class="footer-social">
+                <h3>Mes réseaux sociaux</h3>
+                <p>
+                    Mon objectif est de vous partager mes connaissances acquises lors de mes formations et apprentissage sur internet.
+                    <br>
+                    Pour suivre l'actualité de DevYourWebsite, vous retrouverez ci dessous mes réseaux sociaux
+                </p>
+                <div class="footer-social-icons">
+                    <a href=""><i class="fa-brands fa-youtube social-icons"></i></a>
+                    <a href=""><i class="fa-brands fa-twitch social-icons"></i></a>
+                    <a href=""><i class="fa-brands fa-twitter social-icons"></i></a>
+                    <a href=""><i class="fa-brands fa-github social-icons"></i></a>
+                </div>
+                <div class="footer-hebergement">
+                    <a href="#"><img class="footer-hebergement-img" src="https://ionos.space/images/ionos_deploynow_light.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="footer-news">
+
+            </div>
+            <div class="footer-contact">
+                <h3>Me contacter</h3>
+                <ul>
+                    <li><a href=""><i class="fa-brands fa-discord footer-contact-icon"></i>Discord</a></li>
+                    <li><a href=""><i class="fa-solid fa-envelope footer-contact-icon"></i>Mail</a></li>
+                    <li><a href=""><i class="fa-solid fa-server footer-contact-icon"></i>Politique de confidentialité</a></li>
+                </ul>
+            </div>
+        </footer>
     </body>
 </html>

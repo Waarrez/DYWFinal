@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="home-intro">
+            <div class="text-intro">
+                <h2>Apprenez sans <span class="intro-paid">dépenser</span>.</h2>
+                <p>
+                    Venez découvrir et apprendre les bases du développement web. <br/>
+                    Retrouvez ci-dessous touts les tutoriels.
+                </p>
+                <button class="button-intro"><a href="#">Voir les tutoriels</a></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="home-course">
+            <div class="home-course-text">
+                <h2>Mon parcours</h2>
+                <p>
+                    Bonjour à tous ! Je me présente Thimoté, j'ai 22 ans et je suis actuellement en formation de développeur web Symfony. <br/>
+                    Ayant une licence professionnelle en Administration et sécurité des réseaux, je me suis rendu compte que ma véritable passion était le développement web. <br/>
+                    J'ai décidé dès à présent de proposer du contenu <span>gratuit</span> pour tout ceux qui ont la même passion que moi.
+                </p>
+            </div>
+            <hr class="separator-home">
+            <div class="home-course-img">
+                <img src="{{ asset('img/home-computer.png') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="home-tutorials">
+            <h2>Derniers tutoriels</h2>
+            <div class="home-tutorials-list">
+                <div class="home-tutorials-video">
+                    <div class="home-tutorials-video-img">
+                        <img src="{{ asset('img/logo-js.png') }}" alt="">
+                    </div>
+                    <div class="home-tutorials-content">
+                        <h3>Javascript #1 : Les bases</h3>
+                        <p>Dans cette vidéo, je vous présente les bases sur le langage Javascript</p>
+                    </div>
+                    <div class="home-tutorials-time">
+                        <p><i class="fa-solid fa-clock"></i> 30min</p>
+                    </div>
+                </div>
+                <div class="home-tutorials-video">
+                    <div class="home-tutorials-video-img">
+                        <img src="{{ asset('img/logo-js.png') }}" alt="">
+                    </div>
+                    <div class="home-tutorials-content">
+                        <h3>Javascript #1 : Les bases</h3>
+                        <p>Dans cette vidéo, je vous présente les bases sur le langage Javascript</p>
+                    </div>
+                    <div class="home-tutorials-time">
+                        <p><i class="fa-solid fa-clock"></i> 30min</p>
+                    </div>
+                </div>
+                <div class="home-tutorials-video">
+                    <div class="home-tutorials-video-img">
+                        <img src="{{ asset('img/logo-js.png') }}" alt="">
+                    </div>
+                    <div class="home-tutorials-content">
+                        <h3>Javascript #1 : Les bases</h3>
+                        <p>Dans cette vidéo, je vous présente les bases sur le langage Javascript</p>
+                    </div>
+                    <div class="home-tutorials-time">
+                        <p><i class="fa-solid fa-clock"></i> 30min</p>
+                    </div>
+                </div>
+                <div class="home-tutorials-video">
+                    <div class="home-tutorials-video-img">
+                        <img src="{{ asset('img/logo-js.png') }}" alt="">
+                    </div>
+                    <div class="home-tutorials-content">
+                        <h3>Javascript #1 : Les bases</h3>
+                        <p>Dans cette vidéo, je vous présente les bases sur le langage Javascript</p>
+                    </div>
+                    <div class="home-tutorials-time">
+                        <p><i class="fa-solid fa-clock"></i> 30min</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="home-last-forum">
+            <div class="home-last-forum-content">
+                <h2></h2>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
