@@ -421,8 +421,8 @@ nav ul li a.active {
 }
 
 .forum-intro > input[type=text]:focus {
-    border: none;
-    outline: 2px solid #22313f;
+    border: 2px solid #22313f;
+    outline: none;
 }
 
 .forum-category {
@@ -476,6 +476,110 @@ nav ul li a.active {
 
 .icons-forum {
     margin-left: 15px;
+}
+
+/* Forum Subject */
+
+.separator-subject {
+    width: 80%;
+    margin-top: 20px;
+    background: #22313f;
+}
+
+.forum-subject-header {
+    padding-left: 200px;
+    background: rgba(141, 198, 255, 0.2);
+    margin-top: 60px;
+}
+
+.forum-subject-title {
+    padding: 30px 0;
+}
+
+.forum-subject-title > p {
+    margin-top: 5px;
+}
+
+.forum-subject-body {
+    background: rgba(228, 241, 254, 0.3);
+}
+
+.forum-subject-content {
+    padding-left: 200px;
+    padding-top: 50px;
+    width: 90%;
+    color: #22313f;
+}
+
+.forum-subject-author {
+    padding: 20px;
+    border-radius: 5px;
+    background: rgba(228, 241, 254, 0.5);
+    width: 50%;
+    font-size: 18px;
+    box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+}
+
+.forum-subject-response {
+    margin: 50px 0;
+}
+
+.forum-subject-response > h2 {
+    margin: 10px 0;
+}
+
+.forum-subject-responses {
+    margin: 50px 0;
+}
+
+.forum-responses {
+    background: rgba(228, 241, 254, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 80%;
+    box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+}
+
+.forum-responses > p:first-child {
+    margin: 10px 0;
+}
+
+.forum-subject-form > p {
+    margin: 30px 0;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.forum-subject-form > textarea {
+    border: 2px solid #22313f;
+    border-radius: 5px;
+    background: rgba(228, 241, 254, 0.5);
+    box-shadow: 2px 0 20px rgba(0,0,0, 0.05);
+    padding: 20px;
+    color: #22313f;
+}
+
+.forum-subject-form > textarea:focus {
+    border: 2px solid #22313f;
+    outline: none;
+}
+
+.btn-subject-form {
+    padding: 10px;
+    width: 150px;
+    margin: 30px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(141, 198, 255, 0.3);
+    font-size: 16px;
+    font-weight: 600;
+    color: #22313f;
+    transition: 0.5s;
+}
+
+.btn-subject-form:hover {
+    background: rgba(141, 198, 255, 0.5);
 }
 
 @media only screen and (max-width: 1500px) {
