@@ -23,4 +23,20 @@ class HomeController extends AbstractController
             'title' => 'Forum'
         ]);
     }
+
+    #[Route('/tutorials', name: 'home.tutorials')]
+    public function tutorials(): Response
+    {
+        return $this->render('home/tutorials.html.twig', [
+            'title' => 'Tutoriels'
+        ]);
+    }
+
+    #[Route('/live', name: 'home.live')]
+    public function live(): Response
+    {
+        return $this->render('home/live.html.twig', [
+            'title' => 'Live'
+        ]);
+    }
 }
