@@ -584,31 +584,11 @@ nav ul li a.active {
 
 /* TUTORIALS */
 
-.tutorials-intro {
-    color: #22313f;
-    margin-left: 55px;
-}
-
-.tutorials-intro > h2 {
-    font-size: 30px;
-    margin-left: 10px;
-}
-
-.tutorials-intro > p {
-    font-size: 20px;
-    padding: 10px;
-}
-
-.tutorials-intro {
-    text-align: left;
-    margin-top: 50px;
-}
-
 .tutorials-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 50px 0;
+    margin: 100px 0;
     justify-content: center;
 }
 
