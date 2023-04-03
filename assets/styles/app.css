@@ -582,6 +582,64 @@ nav ul li a.active {
     background: rgba(141, 198, 255, 0.5);
 }
 
+/* TUTORIALS */
+
+.tutorials-intro {
+    color: #22313f;
+    margin-left: 55px;
+}
+
+.tutorials-intro > h2 {
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.tutorials-intro > p {
+    font-size: 20px;
+    padding: 10px;
+}
+
+.tutorials-intro {
+    text-align: left;
+    margin-top: 50px;
+}
+
+.tutorials-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 50px 0;
+    justify-content: center;
+}
+
+.tutorials-pagination {
+    margin-bottom: 50px;
+}
+
+.tutorials-pagination-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorials-pagination-items > li {
+    margin: 15px;
+}
+
+.pagination-item > a {
+    background: rgba(141, 198, 255, 0.4);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.pagination-item > a:hover {
+    background: rgba(141, 198, 255, 0.7);
+}
+
 @media only screen and (max-width: 1500px) {
     nav ul li a {
         font-size: 15px;
