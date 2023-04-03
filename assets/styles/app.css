@@ -651,6 +651,7 @@ nav ul li a.active {
     border-radius: 5px;
     border: none;
     background: rgba(141, 198, 255, 0.3);
+    width: 100%;
 }
 
 .form-login-input:focus {
