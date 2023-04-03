@@ -39,4 +39,18 @@ class HomeController extends AbstractController
             'title' => 'Live'
         ]);
     }
+
+    #[Route('/register', name: 'home.register')]
+    public function register() : Response {
+        return $this->render('security/register.html.twig', [
+            'title' => 'Inscription'
+        ]);
+    }
+
+    #[Route('/login', name: 'home.login')]
+    public function login() : Response {
+        return $this->render('security/login.html.twig', [
+            'title' => 'Connexion'
+        ]);
+    }
 }

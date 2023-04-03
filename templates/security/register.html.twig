@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <form class="form-login" method="post" action="">
+            <label> Nom d'utilisateur <br>
+                <input class="form-login-input" type="text">
+            </label>
+            <label> Email <br>
+                <input class="form-login-input" type="email">
+            </label>
+            <label for=""> Mot de passe <br>
+                <input class="form-login-input" type="password">
+            </label>
+            <label for=""> Confirmer le mot de passe <br>
+                <input class="form-login-input" type="password">
+            </label>
+            <button class="btn-login">Se connecter</button>
+        </form>
+    </div>
+
+{% endblock %}
