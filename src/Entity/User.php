@@ -3,17 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'NONE')]
+    #[ORM\Column(type: Types::STRING)]
+    private ?string $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
@@ -27,9 +31,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    public function getId(): ?int
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Profile $profile = null;
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: CommentaryTutorial::class)]
+    private Collection $commentaryTutorials;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->commentaryTutorials = new ArrayCollection();
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id = Ulid::generate();
     }
 
     public function getUsername(): ?string
@@ -95,5 +117,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaryTutorial>
+     */
+    public function getCommentaryTutorials(): Collection
+    {
+        return $this->commentaryTutorials;
+    }
+
+    public function addCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
+    {
+        if (!$this->commentaryTutorials->contains($commentaryTutorial)) {
+            $this->commentaryTutorials->add($commentaryTutorial);
+            $commentaryTutorial->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
+    {
+        if ($this->commentaryTutorials->removeElement($commentaryTutorial)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaryTutorial->getUsers() === $this) {
+                $commentaryTutorial->setUsers(null);
+            }
+        }
+
+        return $this;
     }
 }
