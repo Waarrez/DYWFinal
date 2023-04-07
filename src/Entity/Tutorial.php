@@ -15,7 +15,7 @@ class Tutorial
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
-    private ?string $id = null;
+    private string $id;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -32,14 +32,19 @@ class Tutorial
     #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: CommentaryTutorial::class)]
     private Collection $commentaryTutorials;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tutorial')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->commentaryTutorials = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->id = Ulid::generate();
     }
 
     public function getId(): ?string
     {
-        return $this->id = Ulid::generate();
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -115,6 +120,33 @@ class Tutorial
             if ($commentaryTutorial->getTutorial() === $this) {
                 $commentaryTutorial->setTutorial(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addTutorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeTutorial($this);
         }
 
         return $this;

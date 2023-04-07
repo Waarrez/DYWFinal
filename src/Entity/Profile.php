@@ -13,9 +13,9 @@ use Symfony\Component\Uid\Ulid;
 class Profile
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
+    #[ORM\GeneratedValue(strategy : "NONE")]
     #[ORM\Column(type: Types::STRING)]
-    private ?string $id = null;
+    private string $id;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
@@ -35,11 +35,12 @@ class Profile
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->id = Ulid::generate();
     }
 
     public function getId(): ?string
     {
-        return $this->id = Ulid::generate();
+        return $this->id;
     }
 
     public function getFirstName(): ?string
