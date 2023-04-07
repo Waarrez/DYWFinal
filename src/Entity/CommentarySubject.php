@@ -2,30 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentaryTutorialRepository;
+use App\Repository\CommentarySubjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity(repositoryClass: CommentaryTutorialRepository::class)]
-class CommentaryTutorial
+#[ORM\Entity(repositoryClass: CommentarySubjectRepository::class)]
+class CommentarySubject
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
-    private string $id;
+    private ?string $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
-
-    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaryTutorials')]
+    #[ORM\ManyToOne(inversedBy: 'commentarySubjects')]
     private ?User $users = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaryTutorials')]
-    private ?Tutorial $tutorial = null;
+    #[ORM\ManyToOne(inversedBy: 'commentarySubjects')]
+    private ?Subject $subject = null;
 
     public function __construct() {
         $this->id = Ulid::generate();
@@ -36,17 +33,6 @@ class CommentaryTutorial
         return $this->id;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
 
     public function getContent(): ?string
     {
@@ -72,14 +58,14 @@ class CommentaryTutorial
         return $this;
     }
 
-    public function getTutorial(): ?Tutorial
+    public function getSubject(): ?Subject
     {
-        return $this->tutorial;
+        return $this->subject;
     }
 
-    public function setTutorial(?Tutorial $tutorial): self
+    public function setSubject(?Subject $subject): self
     {
-        $this->tutorial = $tutorial;
+        $this->subject = $subject;
 
         return $this;
     }

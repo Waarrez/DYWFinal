@@ -15,9 +15,9 @@ use Symfony\Component\Uid\Ulid;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
+    #[ORM\GeneratedValue(strategy : "NONE")]
     #[ORM\Column(type: Types::STRING)]
-    private ?string $id = null;
+    private string $id;
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
@@ -44,14 +44,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: CommentaryTutorial::class)]
     private Collection $commentaryTutorials;
 
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: CommentarySubject::class)]
+    private Collection $commentarySubjects;
+
     public function __construct()
     {
         $this->commentaryTutorials = new ArrayCollection();
+        $this->commentarySubjects = new ArrayCollection();
+        $this->id = Ulid::generate();
     }
 
     public function getId(): ?string
     {
-        return $this->id = Ulid::generate();
+        return $this->id;
     }
 
     public function getUsername(): ?string
@@ -179,6 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($commentaryTutorial->getUsers() === $this) {
                 $commentaryTutorial->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentarySubject>
+     */
+    public function getCommentarySubjects(): Collection
+    {
+        return $this->commentarySubjects;
+    }
+
+    public function addCommentarySubject(CommentarySubject $commentarySubject): self
+    {
+        if (!$this->commentarySubjects->contains($commentarySubject)) {
+            $this->commentarySubjects->add($commentarySubject);
+            $commentarySubject->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentarySubject(CommentarySubject $commentarySubject): self
+    {
+        if ($this->commentarySubjects->removeElement($commentarySubject)) {
+            // set the owning side to null (unless already changed)
+            if ($commentarySubject->getUsers() === $this) {
+                $commentarySubject->setUsers(null);
             }
         }
 
