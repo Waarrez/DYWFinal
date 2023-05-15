@@ -7,43 +7,41 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
-    #[ORM\Column(type: Types::STRING)]
-    private ?string $id = null;
+    #[ORM\GeneratedValue(strategy : "CUSTOM")]
+    #[ORM\Column(type:"ulid")]
+    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
+    private string $id;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'subject', targetEntity: CommentarySubject::class)]
-    private Collection $commentarySubjects;
-
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'subject')]
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'subjects')]
     private Collection $categories;
+
+    #[ORM\ManyToMany(targetEntity: Commentary::class, mappedBy: 'Subject')]
+    private Collection $commentaries;
 
     public function __construct()
     {
-        $this->commentarySubjects = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->id = Ulid::generate();
+        $this->commentaries = new ArrayCollection();
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getTitle(): ?string
     {
@@ -82,36 +80,6 @@ class Subject
     }
 
     /**
-     * @return Collection<int, CommentarySubject>
-     */
-    public function getCommentarySubjects(): Collection
-    {
-        return $this->commentarySubjects;
-    }
-
-    public function addCommentarySubject(CommentarySubject $commentarySubject): self
-    {
-        if (!$this->commentarySubjects->contains($commentarySubject)) {
-            $this->commentarySubjects->add($commentarySubject);
-            $commentarySubject->setSubject($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentarySubject(CommentarySubject $commentarySubject): self
-    {
-        if ($this->commentarySubjects->removeElement($commentarySubject)) {
-            // set the owning side to null (unless already changed)
-            if ($commentarySubject->getSubject() === $this) {
-                $commentarySubject->setSubject(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Category>
      */
     public function getCategories(): Collection
@@ -133,6 +101,33 @@ class Subject
     {
         if ($this->categories->removeElement($category)) {
             $category->removeSubject($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentary>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(Commentary $commentary): self
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->addSubject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(Commentary $commentary): self
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            $commentary->removeSubject($this);
         }
 
         return $this;

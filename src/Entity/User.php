@@ -5,22 +5,21 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy : "NONE")]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\GeneratedValue(strategy : "CUSTOM")]
+    #[ORM\Column(type:"ulid")]
+    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
     private string $id;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $username = null;
+    private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -32,26 +31,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $username = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(mappedBy: 'users', cascade: ['persist', 'remove'])]
     private ?Profile $profile = null;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: CommentaryTutorial::class)]
-    private Collection $commentaryTutorials;
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Tutorial::class)]
+    private Collection $tutorials;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: CommentarySubject::class)]
-    private Collection $commentarySubjects;
-
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Commentary::class)]
+    private Collection $commentaries;
     public function __construct()
     {
-        $this->commentaryTutorials = new ArrayCollection();
-        $this->commentarySubjects = new ArrayCollection();
-        $this->id = Ulid::generate();
+        $this->tutorials = new ArrayCollection();
+        $this->commentaries = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -59,14 +52,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getEmail(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function setEmail(string $email): self
     {
-        $this->username = $username;
+        $this->email = $email;
 
         return $this;
     }
@@ -78,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
@@ -124,26 +117,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getEmail(): ?string
+    public function getUsername(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): self
+    public function setUsername(string $username): self
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+        $this->username = $username;
 
         return $this;
     }
@@ -153,37 +134,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->profile;
     }
 
-    public function setProfile(?Profile $profile): self
+    public function setProfile(Profile $profile): self
     {
+        // set the owning side of the relation if necessary
+        if ($profile->getUsers() !== $this) {
+            $profile->setUsers($this);
+        }
+
         $this->profile = $profile;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, CommentaryTutorial>
+     * @return Collection<int, Tutorial>
      */
-    public function getCommentaryTutorials(): Collection
+    public function getTutorials(): Collection
     {
-        return $this->commentaryTutorials;
+        return $this->tutorials;
     }
 
-    public function addCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
+    public function addTutorial(Tutorial $tutorial): self
     {
-        if (!$this->commentaryTutorials->contains($commentaryTutorial)) {
-            $this->commentaryTutorials->add($commentaryTutorial);
-            $commentaryTutorial->setUsers($this);
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials->add($tutorial);
+            $tutorial->setUsers($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
+    public function removeTutorial(Tutorial $tutorial): self
     {
-        if ($this->commentaryTutorials->removeElement($commentaryTutorial)) {
+        if ($this->tutorials->removeElement($tutorial)) {
             // set the owning side to null (unless already changed)
-            if ($commentaryTutorial->getUsers() === $this) {
-                $commentaryTutorial->setUsers(null);
+            if ($tutorial->getUsers() === $this) {
+                $tutorial->setUsers(null);
             }
         }
 
@@ -191,29 +177,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, CommentarySubject>
+     * @return Collection<int, Commentary>
      */
-    public function getCommentarySubjects(): Collection
+    public function getCommentaries(): Collection
     {
-        return $this->commentarySubjects;
+        return $this->commentaries;
     }
 
-    public function addCommentarySubject(CommentarySubject $commentarySubject): self
+    public function addCommentary(Commentary $commentary): self
     {
-        if (!$this->commentarySubjects->contains($commentarySubject)) {
-            $this->commentarySubjects->add($commentarySubject);
-            $commentarySubject->setUsers($this);
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->setUsers($this);
         }
 
         return $this;
     }
 
-    public function removeCommentarySubject(CommentarySubject $commentarySubject): self
+    public function removeCommentary(Commentary $commentary): self
     {
-        if ($this->commentarySubjects->removeElement($commentarySubject)) {
+        if ($this->commentaries->removeElement($commentary)) {
             // set the owning side to null (unless already changed)
-            if ($commentarySubject->getUsers() === $this) {
-                $commentarySubject->setUsers(null);
+            if ($commentary->getUsers() === $this) {
+                $commentary->setUsers(null);
             }
         }
 

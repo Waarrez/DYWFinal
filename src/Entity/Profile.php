@@ -3,9 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
@@ -13,8 +10,9 @@ use Symfony\Component\Uid\Ulid;
 class Profile
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy : "NONE")]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\GeneratedValue(strategy : "CUSTOM")]
+    #[ORM\Column(type:"ulid")]
+    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
     private string $id;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -27,16 +25,11 @@ class Profile
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profile_picture = null;
+    private ?string $pictureProfile = null;
 
-    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: User::class, orphanRemoval: true)]
-    private Collection $users;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-        $this->id = Ulid::generate();
-    }
+    #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $users = null;
 
     public function getId(): ?string
     {
@@ -79,44 +72,26 @@ class Profile
         return $this;
     }
 
-    public function getProfilePicture(): ?string
+    public function getPictureProfile(): ?string
     {
-        return $this->profile_picture;
+        return $this->pictureProfile;
     }
 
-    public function setProfilePicture(?string $profile_picture): self
+    public function setPictureProfile(?string $pictureProfile): self
     {
-        $this->profile_picture = $profile_picture;
+        $this->pictureProfile = $pictureProfile;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function getUsers(): ?User
     {
         return $this->users;
     }
 
-    public function addUser(User $user): self
+    public function setUsers(User $users): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setProfile($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getProfile() === $this) {
-                $user->setProfile(null);
-            }
-        }
+        $this->users = $users;
 
         return $this;
     }
