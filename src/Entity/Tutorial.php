@@ -7,54 +7,56 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: TutorialRepository::class)]
 class Tutorial
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\GeneratedValue(strategy : "CUSTOM")]
+    #[ORM\Column(type:"ulid")]
+    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
     private string $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $published_at = null;
+    private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'tutorial', targetEntity: CommentaryTutorial::class)]
-    private Collection $commentaryTutorials;
+    #[ORM\ManyToOne(inversedBy: 'tutorials')]
+    private ?User $users = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tutorial')]
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tutorials')]
     private Collection $categories;
+
+    #[ORM\ManyToMany(targetEntity: Commentary::class, mappedBy: 'tutorial')]
+    private Collection $commentaries;
 
     public function __construct()
     {
-        $this->commentaryTutorials = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->id = Ulid::generate();
+        $this->commentaries = new ArrayCollection();
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -85,42 +87,24 @@ class Tutorial
 
     public function getPublishedAt(): ?\DateTimeImmutable
     {
-        return $this->published_at;
+        return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $published_at): self
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
     {
-        $this->published_at = $published_at;
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, CommentaryTutorial>
-     */
-    public function getCommentaryTutorials(): Collection
+    public function getUsers(): ?User
     {
-        return $this->commentaryTutorials;
+        return $this->users;
     }
 
-    public function addCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
+    public function setUsers(?User $users): self
     {
-        if (!$this->commentaryTutorials->contains($commentaryTutorial)) {
-            $this->commentaryTutorials->add($commentaryTutorial);
-            $commentaryTutorial->setTutorial($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaryTutorial(CommentaryTutorial $commentaryTutorial): self
-    {
-        if ($this->commentaryTutorials->removeElement($commentaryTutorial)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaryTutorial->getTutorial() === $this) {
-                $commentaryTutorial->setTutorial(null);
-            }
-        }
+        $this->users = $users;
 
         return $this;
     }
@@ -147,6 +131,33 @@ class Tutorial
     {
         if ($this->categories->removeElement($category)) {
             $category->removeTutorial($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentary>
+     */
+    public function getCommentaries(): Collection
+    {
+        return $this->commentaries;
+    }
+
+    public function addCommentary(Commentary $commentary): self
+    {
+        if (!$this->commentaries->contains($commentary)) {
+            $this->commentaries->add($commentary);
+            $commentary->addTutorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentary(Commentary $commentary): self
+    {
+        if ($this->commentaries->removeElement($commentary)) {
+            $commentary->removeTutorial($this);
         }
 
         return $this;

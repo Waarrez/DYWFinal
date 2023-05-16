@@ -7,39 +7,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\GeneratedValue(strategy : "CUSTOM")]
+    #[ORM\Column(type:"ulid")]
+    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
     private string $id;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'categories')]
-    private Collection $tutorial;
-
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'categories')]
-    private Collection $subject;
+    private Collection $subjects;
+
+    #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'categories')]
+    private Collection $tutorials;
 
     public function __construct()
     {
-        $this->tutorial = new ArrayCollection();
-        $this->subject = new ArrayCollection();
-        $this->id = Ulid::generate();
+        $this->subjects = new ArrayCollection();
+        $this->tutorials = new ArrayCollection();
     }
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -81,41 +80,17 @@ class Category
     }
 
     /**
-     * @return Collection<int, Tutorial>
-     */
-    public function getTutorial(): Collection
-    {
-        return $this->tutorial;
-    }
-
-    public function addTutorial(Tutorial $tutorial): self
-    {
-        if (!$this->tutorial->contains($tutorial)) {
-            $this->tutorial->add($tutorial);
-        }
-
-        return $this;
-    }
-
-    public function removeTutorial(Tutorial $tutorial): self
-    {
-        $this->tutorial->removeElement($tutorial);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Subject>
      */
-    public function getSubject(): Collection
+    public function getSubjects(): Collection
     {
-        return $this->subject;
+        return $this->subjects;
     }
 
     public function addSubject(Subject $subject): self
     {
-        if (!$this->subject->contains($subject)) {
-            $this->subject->add($subject);
+        if (!$this->subjects->contains($subject)) {
+            $this->subjects->add($subject);
         }
 
         return $this;
@@ -123,7 +98,31 @@ class Category
 
     public function removeSubject(Subject $subject): self
     {
-        $this->subject->removeElement($subject);
+        $this->subjects->removeElement($subject);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tutorial>
+     */
+    public function getTutorials(): Collection
+    {
+        return $this->tutorials;
+    }
+
+    public function addTutorial(Tutorial $tutorial): self
+    {
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials->add($tutorial);
+        }
+
+        return $this;
+    }
+
+    public function removeTutorial(Tutorial $tutorial): self
+    {
+        $this->tutorials->removeElement($tutorial);
 
         return $this;
     }
