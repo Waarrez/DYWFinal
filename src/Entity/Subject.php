@@ -32,6 +32,10 @@ class Subject
     #[ORM\ManyToMany(targetEntity: Commentary::class, mappedBy: 'Subject')]
     private Collection $commentaries;
 
+    #[ORM\ManyToOne(inversedBy: 'subjects')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $users = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -129,6 +133,18 @@ class Subject
         if ($this->commentaries->removeElement($commentary)) {
             $commentary->removeSubject($this);
         }
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }
