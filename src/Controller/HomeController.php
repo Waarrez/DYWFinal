@@ -2,12 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Profile;
+use App\Entity\User;
+use App\Form\RegisterForm\RegisterForm;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly UserPasswordHasherInterface $passwordHasher
+    ) {}
+
     #[Route('/', name: 'home.index')]
     public function index(): Response
     {
@@ -41,16 +52,33 @@ class HomeController extends AbstractController
     }
 
     #[Route('/register', name: 'home.register')]
-    public function register() : Response {
-        return $this->render('security/register.html.twig', [
-            'title' => 'Inscription'
-        ]);
-    }
+    public function register(Request $request) : Response {
 
-    #[Route('/login', name: 'home.login')]
-    public function login() : Response {
-        return $this->render('security/login.html.twig', [
-            'title' => 'Connexion'
+        $user = new User();
+        $profile = new Profile();
+
+        $form = $this->createForm(RegisterForm::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $password = $form->get('password')->getData();
+
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
+
+            $user->setPassword($hashedPassword);
+
+            $profile->setUsers($user);
+            $this->entityManager->persist($user);
+            $this->entityManager->persist($profile);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('home.index');
+        }
+
+        return $this->render('security/register.html.twig', [
+            'title' => 'Inscription',
+            'form' => $form->createView()
         ]);
     }
 }

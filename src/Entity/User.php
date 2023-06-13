@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,9 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
-    #[ORM\OneToOne(mappedBy: 'users', cascade: ['persist', 'remove'])]
-    private ?Profile $profile = null;
-
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Tutorial::class)]
     private Collection $tutorials;
 
@@ -44,6 +42,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Subject::class)]
     private Collection $subjects;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $googleId = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $avatar = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $hostedDomain = null;
     public function __construct()
     {
         $this->tutorials = new ArrayCollection();
@@ -133,22 +140,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getProfile(): ?Profile
-    {
-        return $this->profile;
-    }
-
-    public function setProfile(Profile $profile): self
-    {
-        // set the owning side of the relation if necessary
-        if ($profile->getUsers() !== $this) {
-            $profile->setUsers($this);
-        }
-
-        $this->profile = $profile;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Tutorial>
@@ -236,6 +227,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $subject->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): static
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getHostedDomain(): ?string
+    {
+        return $this->hostedDomain;
+    }
+
+    public function setHostedDomain(?string $hostedDomain): static
+    {
+        $this->hostedDomain = $hostedDomain;
 
         return $this;
     }
