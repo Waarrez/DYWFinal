@@ -4,16 +4,14 @@ namespace App\Entity;
 
 use App\Repository\ProfileRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy : "CUSTOM")]
-    #[ORM\Column(type:"ulid")]
-    #[ORM\CustomIdGenerator(class: "Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator")]
-    private string $id;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
@@ -25,13 +23,12 @@ class Profile
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pictureProfile = null;
+    private ?string $profile_picture = null;
 
-    #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $users = null;
 
-    public function getId(): ?string
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -72,14 +69,14 @@ class Profile
         return $this;
     }
 
-    public function getPictureProfile(): ?string
+    public function getProfilePicture(): ?string
     {
-        return $this->pictureProfile;
+        return $this->profile_picture;
     }
 
-    public function setPictureProfile(?string $pictureProfile): self
+    public function setProfilePicture(?string $profile_picture): self
     {
-        $this->pictureProfile = $pictureProfile;
+        $this->profile_picture = $profile_picture;
 
         return $this;
     }
@@ -89,7 +86,7 @@ class Profile
         return $this->users;
     }
 
-    public function setUsers(User $users): self
+    public function setUsers(?User $users): self
     {
         $this->users = $users;
 
