@@ -3,17 +3,18 @@
 {% block body %}
 
     <div class="container">
-        {{ form_start(form, {'attr' : {'class' : 'form-login'}}) }}
-            <label>Adresse mail</label>
-            {{ form_widget(form.email, {'attr' : {'class' : 'form-login-input'}}) }}
-            <label>Nom d'utilisateur</label>
-            {{ form_widget(form.username, {'attr' : {'class' : 'form-login-input'}}) }}
-            <label>Mot de passe</label>
-            {{ form_widget(form.password.first, {'attr' : {'class' : 'form-login-input'}}) }}
-            <label>Confirmer mot de passe</label>
-            {{ form_widget(form.password.second, {'attr' : {'class' : 'form-login-input'}}) }}
+        <form class="form-login" method="post" action="">
+            <label> Nom d'utilisateur <br></label>
+                <input class="form-login-input" type="text">
+            <label> Email</label> <br>
+                <input class="form-login-input" type="email">
+            <label for=""> Mot de passe</label> <br>
+                <input class="form-login-input" type="password">
+            <label for=""> Confirmer Mot de passe</label>
+                <input class="form-login-input" type="password">
 
-        <button type="submit" class="btn-login">S'inscrire</button>
-        {{ form_end(form) }}
+            <button class="btn-login">Se connecter</button>
+        </form>
     </div>
+
 {% endblock %}

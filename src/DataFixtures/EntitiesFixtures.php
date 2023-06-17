@@ -45,7 +45,7 @@ class EntitiesFixtures extends Fixture
             $profile->setFirstName("Prénom $i")
                     ->setLastName("Nom $i")
                     ->setAge($i)
-                    ->setProfilePicture("https://placehold.co/600x400")
+                    ->setPictureProfile("https://placehold.co/600x400")
                     ->setUsers($user);
 
             // Tutorial
