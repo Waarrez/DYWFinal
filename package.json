@@ -21,6 +21,6 @@
         "build": "encore production --progress"
     },
     "engines": {
-        "node": "19"
+        "node": "16"
     }
 }
