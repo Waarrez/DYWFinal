@@ -30,6 +30,11 @@ class AppFixtures extends Fixture
             $user = new User();
             $profile = new Profile();
 
+            $profile->setFirstName($faker->firstName)
+                    ->setLastName($faker->lastName)
+                    ->setAge($faker->randomNumber(2))
+                    ->setProfilePicture($faker->imageUrl());
+
             $hashPass = $this->hasher->hashPassword($user, "password");
 
             $user->setEmail($faker->email)
