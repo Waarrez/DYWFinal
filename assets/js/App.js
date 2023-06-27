@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from "../Pages/Home/Home";
 import Tutorials from "../Pages/Tutorials/Tutorials";
 import Live from "../Pages/Live/Live";
+import Tutorial from "../Pages/Tutorials/Tutorial";
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                    <Route path="/tutorials" element={<Tutorials />} />
                    <Route path="/forum"/>
                    <Route path="/live" element={<Live />}/>
+                   <Route path="/tutorial/:id" element={<Tutorial />}/>
                </Routes>
            </Router>
        </>

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
 
 const Home = () => {
     return (
@@ -12,7 +13,7 @@ const Home = () => {
                 <h1>Page Accueil</h1>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

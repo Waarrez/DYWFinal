@@ -2,29 +2,39 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProfileRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
+#[ApiResource(
+    normalizationContext: ["groups" => "profile:read"]
+)]
 class Profile
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
+    #[Groups(["profile:read", "users:read"])]
     private string $id;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["profile:read", "users:read"])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["profile:read", "users:read"])]
     private ?string $lastName = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["profile:read", "users:read"])]
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["profile:read", "users:read"])]
     private ?string $profile_picture = null;
 
     #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
@@ -36,7 +46,7 @@ class Profile
         $this->id = Ulid::generate();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

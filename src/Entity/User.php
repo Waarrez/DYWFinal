@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,35 +10,47 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(
+    normalizationContext: ["groups" => "users:read"],
+    denormalizationContext: ["groups" => "users:write"]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
+    #[Groups(["users:read", "users:write"])]
     private string $id;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(["users:read", "users:write"])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(["users:read", "users:write"])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(["users:read", "users:write"])]
     private ?string $password = null;
 
     #[ORM\Column]
+    #[Groups(["users:read", "users:write"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\OneToOne(mappedBy: 'users', cascade: ['persist', 'remove'])]
+    #[Groups(["users:read", "users:write"])]
     private ?Profile $profile = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["users:read", "users:write"])]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Commentary::class)]
@@ -54,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->subjects = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
