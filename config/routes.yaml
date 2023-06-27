@@ -2,6 +2,12 @@ controllers:
     resource: ../src/Controller/
     type: annotation
 
+app_routes:
+    path: '/{any}'
+    controller: App\Controller\ToolController::index
+    requirements:
+        any: '.+'
+
 kernel:
     resource: ../src/Kernel.php
     type: annotation
