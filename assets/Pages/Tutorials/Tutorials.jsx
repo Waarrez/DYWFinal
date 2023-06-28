@@ -7,12 +7,14 @@ import Links from "../../components/Link/Links";
 const Tutorials = () => {
 
     const [tutorials, setTutorials] = useState([])
+    const [query, setQuery] = useState("")
 
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData('http://127.0.0.1:8080/dyw/api/tutorials');
-                setTutorials(data['hydra:member'])
+                const url = query ? `http://127.0.0.1:8001/dyw/api/tutorials?title=${query}` : 'http://127.0.0.1:8001/dyw/api/tutorials';
+                const data = await Api.fetchData(url);
+                setTutorials(data['hydra:member']);
                 // Faire quelque chose avec les données de l'API
             } catch (error) {
                 // Gérer l'erreur de requête API
@@ -20,12 +22,31 @@ const Tutorials = () => {
         };
 
         fetchDataFromAPI();
-        const interval = setInterval(fetchDataFromAPI, 10000)
+        const interval = setInterval(fetchDataFromAPI, 10000);
 
         return () => {
-            clearInterval(interval)
+            clearInterval(interval);
+        };
+    }, [query]);
+
+
+
+    const fetchDataQuery = async (query) => {
+        try {
+            const data = await Api.fetchData(`http://127.0.0.1:8001/dyw/api/tutorials?title=${query}`);
+            setTutorials(data['hydra:member']);
+            // Faire quelque chose avec les données de l'API
+        } catch (error) {
+            // Gérer l'erreur de requête API
         }
-    }, []);
+    };
+
+    const handleQuery = (event) => {
+        event.preventDefault();
+        const query = event.target.value;
+        setQuery(query);
+        fetchDataQuery(query);
+    };
 
     return (
         <>
@@ -34,6 +55,7 @@ const Tutorials = () => {
             </Helmet>
 
             <div className="container mt-5 mb-5">
+                <input value={query} onChange={handleQuery} type="text"/>
                 <h1>Liste des tutoriels</h1>
                 {Object.keys(tutorials).length > 0 ? (
                     Object.keys(tutorials).map((key) => {

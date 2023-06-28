@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TutorialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +16,9 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Entity(repositoryClass: TutorialRepository::class)]
 #[ApiResource(
     normalizationContext: ["groups" => "tutorials_read"]
+)]
+#[ApiFilter(
+    SearchFilter::class, properties: ["title" => "partial"]
 )]
 class Tutorial
 {

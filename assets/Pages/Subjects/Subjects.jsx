@@ -11,7 +11,7 @@ const Subjects = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData('http://127.0.0.1:8080/dyw/api/subjects');
+                const data = await Api.fetchData('http://127.0.0.1:8001/dyw/api/subjects');
                 setSubjects(data['hydra:member'])
                 // Faire quelque chose avec les données de l'API
             } catch (error) {
