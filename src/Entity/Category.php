@@ -8,30 +8,39 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ["groups" => "categories_read"]
+)]
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
+    #[Groups(["categories_read"])]
     private string $id;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["categories_read", "tutorials_read", "subjects_read"])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["categories_read"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["categories_read"])]
     private ?string $image = null;
 
     #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'categories')]
+    #[Groups(["categories_read"])]
     private Collection $tutorials;
 
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'categories')]
+    #[Groups(["categories_read"])]
     private Collection $subjects;
 
     public function __construct()

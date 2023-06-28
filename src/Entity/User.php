@@ -23,40 +23,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private string $id;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private ?string $password = null;
 
     #[ORM\Column]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\OneToOne(mappedBy: 'users', cascade: ['persist', 'remove'])]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read"])]
     private ?Profile $profile = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users:read", "users:write"])]
+    #[Groups(["users:read","tutorials_read", "subjects_read"])]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Commentary::class)]
+    #[Groups(["users:read"])]
     private Collection $commentaries;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Subject::class)]
+    #[Groups(["users:read"])]
     private Collection $subjects;
 
     public function __construct()

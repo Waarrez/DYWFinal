@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from "react-router-dom";
 import Api from "../../service/Api";
+import {Helmet} from "react-helmet";
+import ReactPlayer from 'react-player';
 
 const Tutorial = () => {
 
     const {id} = useParams()
 
     const [tutorial, setTutorial] = useState([])
-    const [editForm, setEditForm] = useState(false)
-
-    const handleForm = ()  => {
-        setEditForm(!editForm)
-    }
 
     useEffect(() => {
         const fetchDataFromAPI = async () => {
@@ -29,26 +26,37 @@ const Tutorial = () => {
 
     return (
         <>
-            {
-                editForm ?
-                    <>
-                        <div className="container text-center mt-5">
-                            <form action="">
-                                <input type="text" value={tutorial.title}/> <br/>
-                                <button onClick={handleForm}>Enregistrer les modifications</button>
-                            </form>
+            <Helmet>
+                <title>DevYourWebsite | Tutorial</title>
+            </Helmet>
+
+           <div className="container mt-5 text-center">
+               {Object.keys(tutorial).length > 0 ? (
+                   <>
+                        <h1>{tutorial.title} - {tutorial.categories.map(category => ( <p key={category.id}>{category.name}</p> ))}</h1>
+                        <p>{tutorial.content}</p>
+                        <br/>
+                        <div className="d-flex justify-center">
+                            <ReactPlayer url="https://www.youtube.com/watch?v=SAaqHJbEPW8" controls={true} />
                         </div>
-                    </>
-                :
 
-                <>
-                    <h1>{tutorial.title}</h1>
-                    <button onClick={handleForm}>Modifier le tutorial</button>
-                </>
+                        <br/>
 
-            }
-
-
+                        <h2>Commentaires</h2>
+                       {tutorial.commentaries.map(commentary => (
+                           <>
+                               <p key={commentary.id}>{commentary.users.username} - {commentary.content}</p>
+                           </>
+                       ))}
+                   </>
+               ) : (
+                   <>
+                       <div className="loading-container">
+                           <div className="loading-spinner"></div>
+                       </div>
+                   </>
+               )}
+           </div>
         </>
     )
 }
