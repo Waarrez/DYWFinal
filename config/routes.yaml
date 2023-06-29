@@ -8,6 +8,10 @@ app_routes:
     requirements:
         any: '.+'
 
+api_session_data:
+    path: /api/session
+    controller: App\Controller\ToolController::getSessionData
+
 kernel:
     resource: ../src/Kernel.php
     type: annotation

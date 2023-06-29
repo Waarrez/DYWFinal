@@ -7,6 +7,7 @@ import Links from "../../components/Link/Links";
 const Subjects = () => {
 
     const [subjects, setSubjects] = useState([])
+    const [query, setQuery] = useState("")
 
     useEffect(() => {
         const fetchDataFromAPI = async () => {
@@ -27,6 +28,23 @@ const Subjects = () => {
         }
     }, []);
 
+    const fetchDataQuery = async (query) => {
+        try {
+            const data = await Api.fetchData(`http://127.0.0.1:8001/dyw/api/subjects?title=${query}`);
+            setSubjects(data['hydra:member']);
+            // Faire quelque chose avec les données de l'API
+        } catch (error) {
+            // Gérer l'erreur de requête API
+        }
+    };
+
+    const handleQuery = (event) => {
+        event.preventDefault();
+        const query = event.target.value;
+        setQuery(query);
+        fetchDataQuery(query);
+    };
+
     return (
         <>
             <Helmet>
@@ -34,6 +52,7 @@ const Subjects = () => {
             </Helmet>
 
             <div className="container mt-5 mb-5">
+                <input onChange={handleQuery} type="text"/>
                 <h1>Liste des sujets</h1>
                 {Object.keys(subjects).length > 0 ? (
                     Object.keys(subjects).map((key) => {

@@ -1,17 +1,22 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
+import TwitchEmbedVideo from 'react-twitch-embed-video';
 
 const Live = () => {
-    return (
-        <>
-            <Helmet>
-                <title>DevYourWebsite | Live</title>
-            </Helmet>
 
-            <div>
-                <h1>Page Live</h1>
-            </div>
-        </>
+
+    return (
+        <div className="container mt-5">
+            <TwitchEmbedVideo
+                channel="devyourwebsite"
+                autoplay={true}
+                muted={false}
+                height="600"
+                width="1200"
+                layout="video"
+                onCha
+            />
+        </div>
     )
 }
 

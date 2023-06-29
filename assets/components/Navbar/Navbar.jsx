@@ -1,7 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
+
+    const [isLogin, setIsLogin] = useState();
+
+    const fetchSessionData = async () => {
+        try {
+            const response = await axios.get('/api/session');
+            setIsLogin(response.data);
+            // Utilisez les données de session comme bon vous semble
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // Appelez la fonction pour récupérer les données de session
+    fetchSessionData();
+
     return (
         <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div className="container-fluid">
@@ -27,8 +44,17 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className="d-flex">
-                        <a className="btn btn-info" href="">Connexion</a>
-                        <a className="btn btn-info" href="">Inscription</a>
+                        {isLogin ?
+                            <>
+                                <a className="btn btn-info" href="">Mon profil</a>
+                                <a className="btn btn-danger" href="/logout">Déconnexion</a>
+                            </> :
+
+                            <>
+                                <a className="btn btn-info" href="/login">Connexion</a>
+                                <a className="btn btn-info" href="">Inscription</a>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
