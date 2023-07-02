@@ -2,16 +2,18 @@ controllers:
     resource: ../src/Controller/
     type: annotation
 
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+api_login_check:
+    path: /api/login_check
+    methods: [POST]
+    defaults:
+        _controller: lexik_jwt_authentication.controller.token_authentication
+
 app_routes:
     path: '/{any}'
     controller: App\Controller\ToolController::index
     requirements:
         any: '.+'
-
-api_session_data:
-    path: /api/session
-    controller: App\Controller\ToolController::getSessionData
-
-kernel:
-    resource: ../src/Kernel.php
-    type: annotation

@@ -2,22 +2,14 @@ import React, {useState} from 'react'
 import {Link} from "react-router-dom";
 import axios from "axios";
 
-const Navbar = () => {
+const Navbar = ({user}) => {
 
-    const [isLogin, setIsLogin] = useState();
-
-    const fetchSessionData = async () => {
-        try {
-            const response = await axios.get('/api/session');
-            setIsLogin(response.data);
-            // Utilisez les données de session comme bon vous semble
-        } catch (error) {
-            console.error(error);
+    const handleLogout = () => {
+        if(user) {
+            localStorage.clear()
+            window.location.href = '/'
         }
-    };
-
-    // Appelez la fonction pour récupérer les données de session
-    fetchSessionData();
+    }
 
     return (
         <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -42,17 +34,19 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/live">Live</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/admin">Admin</Link>
+                        </li>
                     </ul>
                     <div className="d-flex">
-                        {isLogin ?
+                        {user ?
                             <>
-                                <a className="btn btn-info" href="">Mon profil</a>
-                                <a className="btn btn-danger" href="/logout">Déconnexion</a>
-                            </> :
-
+                                <a className="btn btn-danger" onClick={handleLogout}>Déconnexion</a>
+                            </>
+                            :
                             <>
                                 <a className="btn btn-info" href="/login">Connexion</a>
-                                <a className="btn btn-info" href="">Inscription</a>
+                                <a className="btn btn-info" href="/register">Inscription</a>}
                             </>
                         }
                     </div>

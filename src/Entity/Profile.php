@@ -10,35 +10,38 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ["groups" => "profile:read"]
+    normalizationContext: ["groups" => "profile:read"],
+    denormalizationContext: ["groups" => "profile:write"]
 )]
 class Profile
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
-    #[Groups(["profile:read", "users:read"])]
+    #[Groups(["profile:read", "users:read", "profile:write"])]
     private string $id;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["profile:read", "users:read"])]
+    #[Groups(["profile:read", "users:read", "profile:write"])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["profile:read", "users:read"])]
+    #[Groups(["profile:read", "users:read", "profile:write"])]
     private ?string $lastName = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["profile:read", "users:read"])]
+    #[Groups(["profile:read", "users:read", "profile:write"])]
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["profile:read", "users:read"])]
+    #[Groups(["profile:read", "users:read", "profile:write"])]
     private ?string $profile_picture = null;
 
     #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["profile:read", "profile:write" ,"users:read"])]
     private ?User $users = null;
 
     public function __construct()

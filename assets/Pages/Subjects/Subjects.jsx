@@ -12,7 +12,7 @@ const Subjects = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData('http://127.0.0.1:8001/dyw/api/subjects');
+                const data = await Api.fetchData('http://127.0.0.1:8001/api/subjects');
                 setSubjects(data['hydra:member'])
                 // Faire quelque chose avec les données de l'API
             } catch (error) {
@@ -30,7 +30,7 @@ const Subjects = () => {
 
     const fetchDataQuery = async (query) => {
         try {
-            const data = await Api.fetchData(`http://127.0.0.1:8001/dyw/api/subjects?title=${query}`);
+            const data = await Api.fetchData(`http://127.0.0.1:8001/api/subjects?title=${query}`);
             setSubjects(data['hydra:member']);
             // Faire quelque chose avec les données de l'API
         } catch (error) {
