@@ -17,7 +17,7 @@ const EditUser = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData(`http://127.0.0.1:8001/api/users/${id}`);
+                const data = await Api.fetchData(`/api/users/${id}`);
                 setUser(data)
                 setUsername(data.username)
                 setEmail(data.email)
@@ -42,7 +42,7 @@ const EditUser = () => {
         }
 
         try {
-            const update = await axios.put(`http://127.0.0.1:8001/api/users/${id}`, updateUser);
+            const update = await axios.put(`/api/users/${id}`, updateUser);
             window.location.href = "/admin/users"
             console.log(update)
 
