@@ -19,7 +19,11 @@ const Register = () => {
                         password: password,
                     };
 
-                    const userResponse = await axios.post('http://127.0.0.1:8001/api/users', userData);
+                    if(window.location.includes('http://127.0.0.1:8001')) {
+                        await axios.post('http://127.0.0.1:8001/api/users', userData);
+                    } else {
+                        await axios.post('https://home-5013540961.app-ionos.space/api/users', userData)
+                    }
 
                 } catch (error) {
                     console.error(error["request"]["response"]);
