@@ -12,7 +12,7 @@ const UsersAdmin = () => {
 
         const fetchDataFromApi = async () => {
             try {
-                const url = 'http://127.0.0.1:8001/api/users'
+                const url = '/api/users'
                 const data = await Api.fetchData(url)
                 setUsers(data['hydra:member'])
             } catch (error) {
@@ -34,7 +34,7 @@ const UsersAdmin = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://127.0.0.1:8001/api/users/${id}`);
+            await axios.delete(`/api/users/${id}`);
             // Faire quelque chose après la suppression réussie
             console.log('Utilisateur supprimé');
         } catch (error) {
