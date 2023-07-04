@@ -22,6 +22,7 @@ const Tutorials = () => {
         };
 
         fetchDataFromAPI();
+
         const interval = setInterval(fetchDataFromAPI, 10000);
 
         return () => {
