@@ -13,7 +13,7 @@ const Tutorial = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData(`http://127.0.0.1:8001/api/tutorials/${id}`);
+                const data = await Api.fetchData(`/api/tutorials/${id}`);
                 setTutorial(data)
                 // Faire quelque chose avec les données de l'API
             } catch (error) {

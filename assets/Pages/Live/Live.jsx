@@ -14,7 +14,6 @@ const Live = () => {
                 height="600"
                 width="1200"
                 layout="video"
-                onCha
             />
         </div>
     )

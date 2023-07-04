@@ -12,8 +12,8 @@ const Tutorials = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const url = query ? `http://127.0.0.1:8001/api/tutorials?title=${query}` : 'http://127.0.0.1:8001/api/tutorials';
-                const data = await Api.fetchData(url);
+                const data = query ? await Api.fetchData(`/api/tutorials?title=${query}`) : await Api.fetchData('/api/tutorials');
+
                 setTutorials(data['hydra:member']);
                 // Faire quelque chose avec les données de l'API
             } catch (error) {
@@ -34,7 +34,7 @@ const Tutorials = () => {
 
     const fetchDataQuery = async (query) => {
         try {
-            const data = await Api.fetchData(`http://127.0.0.1:8001/api/tutorials?title=${query}`);
+            const data = await Api.fetchData(`/api/tutorials?title=${query}`);
             setTutorials(data['hydra:member']);
             // Faire quelque chose avec les données de l'API
         } catch (error) {

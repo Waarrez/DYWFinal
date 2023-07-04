@@ -19,7 +19,7 @@ const Register = () => {
                         password: password,
                     };
 
-                    await axios.post('https://home-5013540961.app-ionos.space/api/users', userData);
+                    await axios.post('/api/users', userData);
 
                 } catch (error) {
                     console.error(error["request"]["response"]);

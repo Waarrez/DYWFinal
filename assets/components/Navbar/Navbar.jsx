@@ -9,6 +9,7 @@ const Navbar = () => {
     const location = useLocation();
 
     useEffect(() => {
+
         const token = localStorage.getItem('jwtToken');
 
         if (token) {
@@ -92,9 +93,15 @@ const Navbar = () => {
                                     <li className="nav-item">
                                         <Link className="nav-link" to="/live">Live</Link>
                                     </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/admin">Admin</Link>
-                                    </li>
+                                    {user ?
+                                        <li className="nav-item">
+                                            {user.roles[0] === "ROLE_ADMIN" ? <Link className="nav-link" to="/admin">Admin</Link> : ''}
+                                        </li>
+                                        :
+                                        <>
+
+                                        </>
+                                    }
                                 </ul>
                                 <div className="d-flex">
                                     {user ?
