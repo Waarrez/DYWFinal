@@ -2,37 +2,54 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SubjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
+#[ApiResource(
+    normalizationContext: ["groups" => "subjects_read"]
+)]
+#[ApiFilter(
+    SearchFilter::class, properties: ["title" => "partial"]
+)]
 class Subject
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
+    #[Groups(["subjects_read"])]
     private string $id;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["subjects_read"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["subjects_read"])]
     private ?string $content = null;
 
     #[ORM\Column]
+    #[Groups(["subjects_read"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'subjects')]
+    #[Groups(["subjects_read"])]
     private Collection $categories;
 
     #[ORM\ManyToMany(targetEntity: Commentary::class, mappedBy: 'subjects')]
+    #[Groups(["subjects_read"])]
     private Collection $commentaries;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]
+    #[Groups(["subjects_read"])]
     private ?User $users = null;
 
     public function __construct()
@@ -43,7 +60,7 @@ class Subject
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

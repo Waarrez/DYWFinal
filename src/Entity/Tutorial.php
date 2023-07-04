@@ -2,37 +2,54 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TutorialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: TutorialRepository::class)]
+#[ApiResource(
+    normalizationContext: ["groups" => "tutorials_read"]
+)]
+#[ApiFilter(
+    SearchFilter::class, properties: ["title" => "partial"]
+)]
 class Tutorial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
+    #[Groups(["tutorials_read"])]
     private string $id;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["tutorials_read"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["tutorials_read"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["tutorials_read"])]
     private ?string $url = null;
 
     #[ORM\Column]
+    #[Groups(["tutorials_read"])]
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Commentary::class, mappedBy: 'tutorials')]
+    #[Groups(["tutorials_read"])]
     private Collection $commentaries;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tutorials')]
+    #[Groups(["tutorials_read"])]
     private Collection $categories;
 
     public function __construct()
@@ -43,7 +60,7 @@ class Tutorial
         $this->categories = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
