@@ -18,3 +18,7 @@ yarn-error.log
 
 .idea
 public/build
+
+###> lexik/jwt-authentication-bundle ###
+
+###< lexik/jwt-authentication-bundle ###
