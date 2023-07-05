@@ -56,6 +56,7 @@ const EditUser = () => {
         <>
             {Object.keys(user).length > 0 ? (
                 <div className="container mt-5 text-center">
+                    <h2>Modifier</h2>
                     <form onSubmit={handleSubmit}>
                         <input onChange={(e)=> setUsername(e.target.value)} type="text" value={username}/> <br/><br/>
                         <input onChange={(e)=> setEmail(e.target.value)} type="email" value={email}/> <br/><br/>
