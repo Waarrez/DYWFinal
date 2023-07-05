@@ -24,6 +24,7 @@
         "build": "encore production --progress"
     },
     "engines": {
+<<<<<<< HEAD
         "node": "19"
     },
     "dependencies": {
@@ -43,5 +44,8 @@
         "react-twitch-embed-video": "^3.0.3",
         "swagger-ui-dist": "^5.1.0",
         "util": "^0.12.5"
+=======
+        "node": "16"
+>>>>>>> main
     }
 }
