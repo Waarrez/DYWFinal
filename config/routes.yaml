@@ -5,15 +5,3 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
-
-api_login_check:
-    path: /api/login_check
-    methods: [POST]
-    defaults:
-        _controller: lexik_jwt_authentication.controller.token_authentication
-
-app_routes:
-    path: '/{any}'
-    controller: App\Controller\ToolController::index
-    requirements:
-        any: '.+'
