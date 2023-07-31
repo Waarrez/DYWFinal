@@ -112,7 +112,7 @@ const Navbar = () => {
                                         :
                                         <>
                                             <Link className="btn btn-info" to="/login">Connexion</Link>
-                                            <Link className="btn btn-info" to="/register">Inscription</Link>}
+                                            <Link className="btn btn-info" to="/register">Inscription</Link>
                                         </>
                                     }
                                 </div>
