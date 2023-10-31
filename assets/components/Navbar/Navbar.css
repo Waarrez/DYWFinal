@@ -1,0 +1,41 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+}
+
+.navbar-logo > a {
+    font-size: 30px;
+}
+
+.navbar-logo > a > span {
+    color: #ABC4FF;
+}
+
+.navbar-items > a {
+    margin-right: 50px;
+    font-size: 18px;
+    position: relative;
+}
+
+.navbar-items > a > svg {
+    margin-right: 10px;
+}
+
+.navbar-items > a:after {
+    content: "";
+    position: absolute;
+    background: #000000;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -10px;
+    transition: 0.3s;
+}
+
+.navbar-items > a:hover:after {
+    width: 100%;
+}
