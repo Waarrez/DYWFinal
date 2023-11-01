@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import Api from "../../service/Api";
 import {Helmet} from "react-helmet";
 import ReactPlayer from 'react-player';
+import hero from './img/hero.jpg'
 
 const Tutorial = () => {
 
@@ -10,54 +11,78 @@ const Tutorial = () => {
 
     const [tutorial, setTutorial] = useState([])
 
+    const [video, setVideo] = useState(false)
+
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
                 const data = await Api.fetchData(`/api/tutorials/${id}`);
                 setTutorial(data)
-                // Faire quelque chose avec les données de l'API
             } catch (error) {
-                // Gérer l'erreur de requête API
+
             }
         };
 
         fetchDataFromAPI();
     }, []);
 
+    const loadVideo = () => {
+        setVideo(true)
+    }
+
     return (
         <>
             <Helmet>
                 <title>DevYourWebsite | Tutorial</title>
             </Helmet>
-            
-           <div className="container mt-5 text-center">
-               
-               {Object.keys(tutorial).length > 0 ? (
-                   <>
-                        <h1>{tutorial.title} - {tutorial.categories.map(category => ( <p key={category.id}>{category.name}</p> ))}</h1>
-                        <p>{tutorial.content}</p>
-                        <br/>
-                        <div className="d-flex justify-center">
-                            <ReactPlayer url="https://www.youtube.com/watch?v=SAaqHJbEPW8" controls={true} />
-                        </div>
 
-                        <br/>
-
-                        <h2>Commentaires</h2>
-                       {tutorial.commentaries.map(commentary => (
-                           <>
-                               <p key={commentary.id}>{commentary.users.username} - {commentary.content}</p>
-                           </>
-                       ))}
-                   </>
-               ) : (
-                   <>
-                       <div className="loading-container">
-                           <div className="loading-spinner"></div>
+           {Object.keys(tutorial).length > 0 ? (
+               <>
+                   <div key={tutorial.id} className="tutorial-item">
+                       <div className="tutorial-item-title">
+                           <h2>{tutorial.title} </h2>
+                           <span className="buttons-blue">{tutorial.categories.map(category => category.name)}</span>
                        </div>
-                   </>
-               )}
-           </div>
+                       <div className="tutorial-item-video">
+                           {video ? <ReactPlayer
+                                   width="100%"
+                                   height="100%"
+                                   url="https://www.youtube.com/watch?v=SAaqHJbEPW8"
+                                   controls={true}
+                                   playing={true}
+                                   volume={0.2}
+                               /> :
+                               <div className="tutorial-load-image" style={{backgroundImage : `url(${hero})`, backgroundRepeat : "no-repeat", backgroundSize : "cover"}}>
+                                   <button onClick={loadVideo} className="play-button">▶</button>
+                               </div>
+                           }
+                       </div>
+                       <div className="tutorial-item-content">
+                           <h2>Description</h2>
+                           <p>{tutorial.content}</p>
+                       </div>
+                       <div className="tutorial-item-comments">
+                           <h2>{tutorial.commentaries.length} commentaires :</h2>
+                           {tutorial.commentaries.map(commentary => (
+                               <>
+                                   <hr />
+                                   <div className="tutorial-item-comment">
+                                       <p>{commentary.users.username}, écrit le </p>
+                                       <p className="tutorial-item-commentary">{commentary.content}</p>
+                                   </div>
+                               </>
+                           ))}
+                       </div>
+                   </div>
+
+               </>
+           ) : (
+               <>
+                   <div className="loading-container">
+                       <div className="loading-spinner"></div>
+                   </div>
+               </>
+           )}
         </>
     )
 }
