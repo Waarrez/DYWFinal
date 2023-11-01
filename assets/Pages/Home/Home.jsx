@@ -33,8 +33,7 @@ const Home = () => {
                     <p>Plongez dans l'univers du <br /> développement web et <br /> rejoignez notre <br /> communauté de <br /> passionnés !</p>
                 </div>
                 <div className="home-intro-buttons">
-                    <a className="buttons-blue" href="">Connexion</a>
-                    <a id="buttonChild" className="buttons-dark" href="">Inscription</a>
+                    <a className="buttons-blue" href="">Inscrivez-vous dès maintenant !</a>
                 </div>
             </div>
 
