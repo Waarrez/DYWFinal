@@ -1,6 +1,18 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
+function generateEmailVerificationCode(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    let verificationCode = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        verificationCode += characters.charAt(randomIndex);
+    }
+
+    return verificationCode;
+}
+
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -17,6 +29,7 @@ const Register = () => {
                         email: email,
                         username: username,
                         password: password,
+                        isVerify : generateEmailVerificationCode(20)
                     };
 
                     await axios.post('/api/users', userData);
