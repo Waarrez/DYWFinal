@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const Login = () => {
 
@@ -46,6 +47,7 @@ const Login = () => {
                 <label htmlFor="">Mot de passe</label>
                 <input type="password" placeholder="Votre mot de passe..." value={password} onChange={(e) => setPassword(e.target.value)}/>
 
+                <Link to="/reset-password">Mot de passe oublié ?</Link>
                 <button type="submit" className="btn btn-primary">Se connecter</button>
             </form>
         </div>

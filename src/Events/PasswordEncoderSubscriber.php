@@ -31,7 +31,7 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function encodePassword(ViewEvent $event)
+    public function encodePassword(ViewEvent $event): void
     {
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

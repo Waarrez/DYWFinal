@@ -15,6 +15,8 @@ import jwt_decode from "jwt-decode";
 import Admin from "../Pages/Admin/Admin";
 import UsersAdmin from "../Pages/Admin/Users/UsersAdmin";
 import EditUser from "../Pages/Admin/Users/EditUser";
+import ResetPassword from "../Pages/Login/ResetPassword";
+import Footer from "../components/Footer/Footer";
 
 const App = () => {
 
@@ -43,10 +45,12 @@ const App = () => {
                    <Route path="/admin/users" element={<UsersAdmin />}/>
                    <Route path="/admin/user/:id" element={<EditUser />}/>
                    <Route path="/login" element={<Login/>}/>
+                   <Route path="/reset-password" element={<ResetPassword/>}/>
                    <Route path="/register" element={<Register/>}/>
                    <Route path="/tutorial/:id" element={<Tutorial />}/>
                    <Route path="/subject/:id" element={<Subject />}/>
                </Routes>
+               <Footer/>
            </Router>
        </>
     )

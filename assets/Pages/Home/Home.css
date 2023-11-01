@@ -1,0 +1,112 @@
+.home-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0;
+}
+
+.home-intro {
+    height: auto;
+    flex-direction: column;
+    padding : 100px 250px;
+}
+
+.home-intro-content > p {
+    font-size: 60px;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.home-intro-content > a {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.home-intro-buttons {
+    font-size: 20px;
+    margin-top: 80px;
+}
+
+#buttonChild {
+    margin-left: 20px;
+}
+
+.home-learn {
+    padding: 200px 250px;
+    height: auto;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.home-learn > h2 {
+    font-size: 60px;
+}
+
+.home-learn-presentation {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    margin-top: 150px;
+}
+
+.home-learn-presentation-content {
+    padding: 0 200px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.home-learn-content-tutorials > h2 {
+    font-size: 30px;
+}
+
+.home-learn-content-tutorials > p {
+    font-size: 23px;
+    font-weight: lighter;
+}
+
+.home-learn-content-forum > h2 {
+    font-size: 30px;
+}
+
+.home-learn-content-forum > p {
+    font-size: 23px;
+    font-weight: lighter;
+}
+
+.home-learn-content-live > h2 {
+    font-size: 30px;
+}
+
+.home-learn-content-live > p {
+    font-size: 23px;
+    font-weight: lighter;
+}
+
+.home-questions {
+    padding: 100px 250px;
+    height: auto;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.home-questions > h2 {
+    font-size: 60px;
+}
+
+.home-questions-content {
+    font-family: "Inter", sans-serif;
+    display: flex;
+}
+
+.home-questions-contents > p {
+    font-weight: lighter;
+    padding: 0 150px 0 0;
+    font-size: 18px;
+}
+
+.home-projects {
+    padding: 100px 250px;
+    height: auto;
+    font-family: 'Unbounded', sans-serif;
+}
+
+.home-projects > h2 {
+    font-size: 60px;
+}

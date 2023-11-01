@@ -1,0 +1,22 @@
+.footer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.footer > a > svg:hover {
+    background: #ABC4FF;
+    transition: 0.5s;
+}
+
+.footer > p {
+    font-size: 22px;
+}
+
+.footer-items > a {
+    margin : 0 15px;
+}
