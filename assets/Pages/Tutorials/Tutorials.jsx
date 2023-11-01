@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import Api from "../../service/Api";
 import moment from 'moment';
 import Links from "../../components/Link/Links";
+import "./Tutorial.css"
+import {Link} from "react-router-dom";
 
 const Tutorials = () => {
 
@@ -22,12 +24,6 @@ const Tutorials = () => {
         };
 
         fetchDataFromAPI();
-
-        const interval = setInterval(fetchDataFromAPI, 10000);
-
-        return () => {
-            clearInterval(interval);
-        };
     }, [query]);
 
 
@@ -55,21 +51,42 @@ const Tutorials = () => {
                 <title>DevYourWebsite | Tutorials</title>
             </Helmet>
 
-            <div className="container mt-5 mb-5">
-                <input value={query} onChange={handleQuery} type="text"/>
-                <h1>Liste des tutoriels</h1>
+            <div className="tutorial-intro">
+                <h2>Tutoriels</h2>
+                <div className="tutorial-content">
+                    <p>Apprenez avec des tutoriels interactifs et <br /> amusants pour tous les niveaux.</p>
+                </div>
+            </div>
+
+            <div className="tutorial-search">
+                <input value={query} onChange={handleQuery} type="text" placeholder="Votre recherche..."/>
+            </div>
+            <div className="tutorials-list">
                 {Object.keys(tutorials).length > 0 ? (
                     Object.keys(tutorials).map((key) => {
                         const data = tutorials[key];
                         return (
-                            <div key={data.id} className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">{data.title}</h4>
-                                    <p className="card-text">{data.content}</p>
-                                    <p>Date de publication : {moment(data.createdAt).format('YYYY-MM-DD')}</p>
-                                    <Links url={`/tutorial/${data.id}`} name="Voir le tutoriel" />
-                                </div>
-                            </div>
+                            <>
+                                <Link to={`/tutorial/${data.id}`}>
+                                    <div key={data.id} className="tutorial-card">
+                                        <div className="tutorial-card-title">
+                                            <h3>{data.title}</h3>
+                                            <p>3 min</p>
+                                        </div>
+                                        <div className="tutorial-card-content">
+                                            <p>{data.content}</p>
+                                        </div>
+                                        <div className="tutorial-card-category">
+                                            {data.categories.map(category => (
+                                                <>
+                                                    <span key={category.id} className="badge-category">{category.name}</span>
+                                                </>
+                                            ))}
+
+                                        </div>
+                                    </div>
+                                </Link>
+                            </>
                         );
                     })
                 ) : (
@@ -78,8 +95,6 @@ const Tutorials = () => {
                     </div>
                 )}
             </div>
-
-
         </>
     )
 }

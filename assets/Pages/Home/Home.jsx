@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import background from "./img/background.png"
 import image from "./img/image.png"
 import "./Home.css"
+import {Link} from "react-router-dom";
 
 const Home = () => {
 
@@ -24,16 +25,12 @@ const Home = () => {
                 <title>DevYourWebsite | Accueil</title>
             </Helmet>
 
-            <div className="home-background">
-                <img width="70%" src={background} alt=""/>
-            </div>
-
             <div className="home-intro">
                 <div className="home-intro-content">
                     <p>Plongez dans l'univers du <br /> développement web et <br /> rejoignez notre <br /> communauté de <br /> passionnés !</p>
                 </div>
                 <div className="home-intro-buttons">
-                    <a className="buttons-blue" href="">Inscrivez-vous dès maintenant !</a>
+                    <Link className="buttons-blue" to="/register">Inscrivez-vous dès maintenant !</Link>
                 </div>
             </div>
 
@@ -73,7 +70,7 @@ const Home = () => {
                     </div>
                     <div className="home-questions-contents">
                         <h2>Est-ce vraiment gratuit ?</h2>
-                        <p>Oui, notre plateforme est entièrement gratuite pour les membres inscrits.</p>
+                        <p>Oui, le contenu de mes vidéos est 100% gratuit pour les membres inscrits.</p>
                     </div>
                 </div>
             </div>
