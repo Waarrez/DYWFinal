@@ -13,30 +13,31 @@ use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: CommentaryRepository::class)]
 #[ApiResource(
-    normalizationContext: ["groups" => "commentaries_read"]
+    normalizationContext: ["groups" => "commentaries_read"],
+    denormalizationContext: ["groups" => "commentaries_write"]
 )]
 class Commentary
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'NONE')]
     #[ORM\Column(type: Types::STRING)]
-    #[Groups(["commentaries_read", "tutorials_read", "subjects_read"])]
+    #[Groups(["commentaries_read", "tutorials_read", "subjects_read", "commentaries_write"])]
     private string $id;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["commentaries_read", "tutorials_read", "subjects_read"])]
+    #[Groups(["commentaries_read", "tutorials_read", "subjects_read", "commentaries_write"])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaries')]
-    #[Groups(["commentaries_read", "tutorials_read", "subjects_read"])]
+    #[Groups(["commentaries_read", "tutorials_read", "subjects_read", "commentaries_write"])]
     private ?User $users = null;
 
     #[ORM\ManyToMany(targetEntity: Tutorial::class, inversedBy: 'commentaries')]
-    #[Groups(["commentaries_read"])]
+    #[Groups(["commentaries_read", "commentaries_write"])]
     private Collection $tutorials;
 
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'commentaries')]
-    #[Groups(["commentaries_read"])]
+    #[Groups(["commentaries_read", "commentaries_write"])]
     private Collection $subjects;
 
     public function __construct()
