@@ -10,7 +10,8 @@ const Tutorial = () => {
     const {id} = useParams()
 
     const [tutorial, setTutorial] = useState([])
-
+    const [username, setUsername] = useState("")
+    const [content, setContent] = useState("")
     const [video, setVideo] = useState(false)
 
     useEffect(() => {
@@ -62,7 +63,15 @@ const Tutorial = () => {
                            <p>{tutorial.content}</p>
                        </div>
                        <div className="tutorial-item-comments">
-                           <h2>{tutorial.commentaries.length} commentaires :</h2>
+                           <h2>
+                               {
+                                   tutorial.commentaries.length > 1
+                                   ?
+                                   <h2>{tutorial.commentaries.length} commentaires :</h2>
+                                   :
+                                   <h2>{tutorial.commentaries.length} commentaire :</h2>
+                               }
+                           </h2>
                            {tutorial.commentaries.map(commentary => (
                                <>
                                    <hr />
@@ -72,6 +81,19 @@ const Tutorial = () => {
                                    </div>
                                </>
                            ))}
+                           <hr />
+                           <div className="tutorial-item-form">
+                               <h2>Laisser un commentaire :</h2>
+                               <div className="tutorial-item-form-username">
+                                   <label htmlFor="">Nom d'utilisateur</label>
+                                   <input onChange={(e) => setUsername(e.target.value)} name="username" type="text"/>
+                               </div>
+                               <div className="tutorial-item-form-message">
+                                   <label htmlFor="">Votre message</label>
+                                   <textarea onChange={(e) => setContent(e.target.value)} name="comment" id=""></textarea>
+                               </div>
+                               <button className="buttons-blue">ENVOYER</button>
+                           </div>
                        </div>
                    </div>
 
