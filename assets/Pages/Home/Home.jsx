@@ -18,6 +18,8 @@ const Home = () => {
         }
     }, []);
 
+    console.log(user)
+
     return (
         <>
             <Helmet>
