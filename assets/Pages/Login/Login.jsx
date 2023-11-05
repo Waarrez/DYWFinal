@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import "./Login.css"
 
 const Login = () => {
 
@@ -40,16 +41,16 @@ const Login = () => {
     }
 
     return (
-        <div className="container mt-5 text-center">
+        <div className="form-login">
             <h2>Connexion</h2>
-            <form onSubmit={handleLogin}>
+            <form className="form" onSubmit={handleLogin}>
                 <label>Utilisateur</label> <br/>
                 <input type="text" placeholder="Votre nom d'utilisateur..." value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <label htmlFor="">Mot de passe</label>
                 <input type="password" placeholder="Votre mot de passe..." value={password} onChange={(e) => setPassword(e.target.value)}/>
 
                 <Link to="/reset-password">Mot de passe oublié ?</Link>
-                <button type="submit" className="btn btn-primary">Se connecter</button>
+                <button type="submit" className="buttons-dark">Se connecter</button>
             </form>
         </div>
     )
