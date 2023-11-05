@@ -13,22 +13,22 @@ class ToolController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager
-    ){}
+    ) {
+    }
 
     #[Route('/', name: 'home.index')]
     public function index(): Response
     {
-
         return $this->render('tool/index.html.twig');
     }
 
     #[Route('/confirm-account/{token}', name: 'home.confirmAccount')]
-    public function confirmAccount(string $token) : ?Response {
-
-        $confirm =  $this->userRepository->findBy(['isVerify'=> $token]);
+    public function confirmAccount(string $token): ?Response
+    {
+        $confirm = $this->userRepository->findBy(['isVerify' => $token]);
 
         foreach ($confirm as $verify) {
-            if($verify->getIsVerify() === $token) {
+            if ($verify->getIsVerify() === $token) {
                 $user = $verify->setIsVerify('');
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();

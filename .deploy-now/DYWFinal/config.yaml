@@ -42,7 +42,7 @@ deploy:
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
-      - php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+      # - php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
 # uncomment the following lines to configure cron jobs
 #runtime:
