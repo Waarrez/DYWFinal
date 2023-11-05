@@ -200,11 +200,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCommentary(Commentary $commentary): static
     {
-        if ($this->commentaries->removeElement($commentary)) {
-            // set the owning side to null (unless already changed)
-            if ($commentary->getUsers() === $this) {
-                $commentary->setUsers(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->commentaries->removeElement($commentary) && $commentary->getUsers() === $this) {
+            $commentary->setUsers(null);
         }
 
         return $this;
@@ -230,11 +228,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeSubject(Subject $subject): static
     {
-        if ($this->subjects->removeElement($subject)) {
-            // set the owning side to null (unless already changed)
-            if ($subject->getUsers() === $this) {
-                $subject->setUsers(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->subjects->removeElement($subject) && $subject->getUsers() === $this) {
+            $subject->setUsers(null);
         }
 
         return $this;
