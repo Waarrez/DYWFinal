@@ -1,0 +1,47 @@
+.form-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(249, 249, 249, 0.8);
+    padding: 100px;
+}
+
+.form-login > h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 40px;
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.form > label {
+    margin-top: 20px;
+}
+
+.form > input {
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    width: 350px;
+}
+
+.form > a {
+    margin-top: 30px;
+}
+
+.form > button {
+    margin-top: 30px;
+    color: #FFFFFF;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
