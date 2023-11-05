@@ -18,7 +18,8 @@ use Symfony\Component\Uid\Ulid;
     normalizationContext: ["groups" => "tutorials_read"]
 )]
 #[ApiFilter(
-    SearchFilter::class, properties: ["title" => "partial"]
+    SearchFilter::class,
+    properties: ["title" => "partial"]
 )]
 class Tutorial
 {

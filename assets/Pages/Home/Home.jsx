@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import jwt_decode from 'jwt-decode';
-import background from "./img/background.png"
 import image from "./img/image.png"
 import "./Home.css"
 import {Link} from "react-router-dom";

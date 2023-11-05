@@ -24,12 +24,13 @@ const Login = () => {
                         password
                     })
 
+                    console.log(response)
+
                     const token = response.data.token
                     localStorage.setItem('jwtToken', token)
                     window.location.href = '/'
                 } catch (error) {
                     console.error(error)
-                    window.location.href = '/login'
                 }
             }
         } else {

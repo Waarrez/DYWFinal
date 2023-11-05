@@ -17,8 +17,7 @@ class AppFixtures extends Fixture
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher
-    )
-    {
+    ) {
     }
 
 
@@ -45,7 +44,7 @@ class AppFixtures extends Fixture
             $manager->persist($user);
             $manager->persist($profile);
 
-            for($c = 0; $c < 20; $c++) {
+            for ($c = 0; $c < 20; $c++) {
                 $tutorial = new Tutorial();
                 $commentary = new Commentary();
                 $category = new Category();

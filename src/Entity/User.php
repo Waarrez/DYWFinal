@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Profile $profile = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users:read","tutorials_read", "subjects_read", "users:write", "profile:read"])]
+    #[Groups(["users:read", "tutorials_read", "subjects_read", "users:write", "profile:read"])]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Commentary::class)]
@@ -60,10 +60,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Subject::class)]
     #[Groups(["users:read", "users:write"])]
     private Collection $subjects;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["users:read", "users:write"])]
-    private ?string $isVerify = null;
 
     public function __construct()
     {
@@ -204,11 +200,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCommentary(Commentary $commentary): static
     {
-        if ($this->commentaries->removeElement($commentary)) {
-            // set the owning side to null (unless already changed)
-            if ($commentary->getUsers() === $this) {
-                $commentary->setUsers(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->commentaries->removeElement($commentary) && $commentary->getUsers() === $this) {
+            $commentary->setUsers(null);
         }
 
         return $this;
@@ -234,24 +228,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeSubject(Subject $subject): static
     {
-        if ($this->subjects->removeElement($subject)) {
-            // set the owning side to null (unless already changed)
-            if ($subject->getUsers() === $this) {
-                $subject->setUsers(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->subjects->removeElement($subject) && $subject->getUsers() === $this) {
+            $subject->setUsers(null);
         }
-
-        return $this;
-    }
-
-    public function getIsVerify(): ?string
-    {
-        return $this->isVerify;
-    }
-
-    public function setIsVerify(string $isVerify): static
-    {
-        $this->isVerify = $isVerify;
 
         return $this;
     }
