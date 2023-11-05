@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Profile $profile = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users:read","tutorials_read", "subjects_read", "users:write", "profile:read"])]
+    #[Groups(["users:read", "tutorials_read", "subjects_read", "users:write", "profile:read"])]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Commentary::class)]

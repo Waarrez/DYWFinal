@@ -15,14 +15,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PasswordEncoderSubscriber implements EventSubscriberInterface
-
-
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator
-    ) {}
+    ) {
+    }
 
     public static function getSubscribedEvents(): array
     {
@@ -46,7 +45,7 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface
                     $profile = new Profile();
                     $result->setProfile($profile);
                     $mail = new Mail();
-                    $mail->send($result->getEmail(),$result->getUsername(), $result->getIsVerify());
+                    $mail->send($result->getEmail(), $result->getUsername(), $result->getIsVerify());
                 } catch (ValidationException $exception) {
                     // Une exception ValidationException est levée lorsqu'il y a une erreur de validation
                     // Vous pouvez ajouter ici la logique pour gérer l'erreur de validation

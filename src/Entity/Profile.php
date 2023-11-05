@@ -41,7 +41,7 @@ class Profile
 
     #[ORM\OneToOne(inversedBy: 'profile', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["profile:read", "profile:write" ,"users:read"])]
+    #[Groups(["profile:read", "profile:write", "users:read"])]
     private ?User $users = null;
 
     public function __construct()
