@@ -61,10 +61,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["users:read", "users:write"])]
     private Collection $subjects;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["users:read", "users:write"])]
-    private ?string $isVerify = null;
-
     public function __construct()
     {
         $this->id = Ulid::generate();
@@ -240,18 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $subject->setUsers(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getIsVerify(): ?string
-    {
-        return $this->isVerify;
-    }
-
-    public function setIsVerify(string $isVerify): static
-    {
-        $this->isVerify = $isVerify;
 
         return $this;
     }
