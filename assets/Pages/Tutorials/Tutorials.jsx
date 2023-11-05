@@ -65,6 +65,10 @@ const Tutorials = () => {
                 {Object.keys(tutorials).length > 0 ? (
                     Object.keys(tutorials).map((key) => {
                         const data = tutorials[key];
+                        const numberOfWordsToShow = 150;
+                        const contentWords = data.content.split('');
+                        const displayedWords = contentWords.slice(0, numberOfWordsToShow);
+
                         return (
                             <>
                                 <Link to={`/tutorial/${data.id}`}>
@@ -74,7 +78,7 @@ const Tutorials = () => {
                                             <p>3 min</p>
                                         </div>
                                         <div className="tutorial-card-content">
-                                            <p>{data.content}</p>
+                                            <p>{displayedWords}...</p>
                                         </div>
                                         <div className="tutorial-card-category">
                                             {data.categories.map(category => (

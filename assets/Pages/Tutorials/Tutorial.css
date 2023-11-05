@@ -38,14 +38,14 @@
 
 .tutorial-card {
     width: 400px;
-    height: 300px;
+    height: 250px;
     background: rgba(249, 249, 249, 0.8);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     border : 2px solid rgba(171, 196, 255, 0.5);
     cursor: pointer;
     display: grid;
-    grid-template-rows: 1fr 200px 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     padding-top: 20px;
     color: #000000;
     margin-top: 50px;
@@ -107,10 +107,12 @@
 }
 
 .tutorial-item-title > span {
-    font-size : 18px;
+    font-size : 15px;
     padding: 10px;
     height: 20px;
     margin-left: 30px;
+    text-align: center;
+    border: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 .tutorial-item-content > h2 {
@@ -152,6 +154,8 @@
 
 .tutorial-item-comment {
     margin-bottom: 50px;
+    border-radius: 8px;
+    padding: 20px;
 }
 
 .tutorial-item-commentary {
@@ -175,4 +179,61 @@
 .play-button:hover {
     background-color: #000000;
     transition: 0.5s;
+}
+
+.tutorial-item-form {
+    width: 500px;
+    margin-top: 50px;
+}
+
+.tutorial-item-form > h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size : 25px;
+}
+
+.tutorial-item-form > button {
+    font-size : 16px;
+    margin-top: 20px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+}
+
+.tutorial-item-form-username {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.tutorial-item-form-username > input {
+    border: none;
+    padding: 10px;
+    height: 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.tutorial-item-form-username > input:focus {
+    outline: 2px ridge rgba(171, 196, 255, 0.6);
+}
+
+.tutorial-item-form-message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.tutorial-item-form-message > textarea {
+    border: none;
+    padding: 10px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.tutorial-item-form-message > textarea:focus {
+    outline: 2px ridge rgba(171, 196, 255, 0.6);;
 }
