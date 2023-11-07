@@ -7,7 +7,7 @@ import hero from './img/hero.jpg'
 
 const Tutorial = () => {
 
-    const {slug} = useParams()
+    const {id} = useParams()
 
     const [tutorial, setTutorial] = useState([])
     const [username, setUsername] = useState("")
@@ -17,7 +17,7 @@ const Tutorial = () => {
     useEffect(() => {
         const fetchDataFromAPI = async () => {
             try {
-                const data = await Api.fetchData(`/api/tutorials/${slug}`);
+                const data = await Api.fetchData(`/api/tutorials/${id}`);
                 setTutorial(data)
             } catch (error) {
 
