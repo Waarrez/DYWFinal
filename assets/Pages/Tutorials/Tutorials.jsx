@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import Api from "../../service/Api";
 import "./Tutorial.css"
 import {Link} from "react-router-dom";
-import slugify from "slugify";
 
 const Tutorials = () => {
 
