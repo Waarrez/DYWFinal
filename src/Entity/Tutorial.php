@@ -15,7 +15,8 @@ use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: TutorialRepository::class)]
 #[ApiResource(
-    normalizationContext: ["groups" => "tutorials_read"]
+    normalizationContext: ["groups" => "tutorials_read"],
+    denormalizationContext: ["groups"  => "tutorials_write"],
 )]
 #[ApiFilter(
     SearchFilter::class,
@@ -52,6 +53,10 @@ class Tutorial
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tutorials')]
     #[Groups(["tutorials_read"])]
     private Collection $categories;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(["tutorials_read"])]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -164,6 +169,18 @@ class Tutorial
         if ($this->categories->removeElement($category)) {
             $category->removeTutorial($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

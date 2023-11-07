@@ -44,8 +44,6 @@ class PasswordEncoderSubscriber implements EventSubscriberInterface
                     $result->setPassword($hash);
                     $profile = new Profile();
                     $result->setProfile($profile);
-                    $mail = new Mail();
-                    $mail->send($result->getEmail(), $result->getUsername(), $result->getIsVerify());
                 } catch (ValidationException $exception) {
                     // Une exception ValidationException est levée lorsqu'il y a une erreur de validation
                     // Vous pouvez ajouter ici la logique pour gérer l'erreur de validation
