@@ -1,23 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-function generateEmailVerificationCode(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
-    let verificationCode = '';
-
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        verificationCode += characters.charAt(randomIndex);
-    }
-
-    return verificationCode;
-}
-
 const Register = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState("")
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -29,26 +18,38 @@ const Register = () => {
                         email: email,
                         username: username,
                         password: password,
-                        isVerify : generateEmailVerificationCode(20)
                     };
 
                     await axios.post('/api/users', userData);
 
                 } catch (error) {
-                    console.error(error["request"]["response"]);
+                    if (error.response && error.response.status === 422) {
+                        const errorMessage = error.response.data.detail
+                        setError("Le nom d'utilisateur est dèja utilisé !");
+                        console.log(error)
+                    } else {
+                        setError('Une erreur s\'est produite lors de la requête.');
+                    }
                 }
             } else {
-                console.error('Mot de passe incorrect');
+                setError('Mot de passe incorrect');
             }
         } else {
-            console.error('Erreur');
+            setError('Erreur');
         }
     };
-
 
     return (
         <div className="container text-center mt-5">
             <h1>Inscription</h1>
+
+            {error ?
+                <div className="alert-error">
+                    {error}
+                </div>
+                :
+                ''
+            }
 
             <form onSubmit={handleRegister}>
                 <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Votre email..." /> <br />

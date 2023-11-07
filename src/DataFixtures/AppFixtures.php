@@ -8,6 +8,7 @@ use App\Entity\Profile;
 use App\Entity\Subject;
 use App\Entity\Tutorial;
 use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -24,6 +25,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        $slugify = new Slugify();
 
         for ($u = 0; $u < 20; $u++) {
             $user = new User();
@@ -60,6 +62,8 @@ class AppFixtures extends Fixture
                          ->setUrl("www.youtube.com")
                          ->addCommentary($commentary)
                          ->addCategory($category);
+
+                $tutorial->setSlug($slugify->slugify($tutorial->getTitle()));
 
                 $commentary->addTutorial($tutorial)
                            ->setContent("Commentaire n°$c")
