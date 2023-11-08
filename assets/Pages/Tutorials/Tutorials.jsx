@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { Helmet } from 'react-helmet';
 import Api from "../../service/Api";
-import moment from 'moment';
-import Links from "../../components/Link/Links";
 import "./Tutorial.css"
 import {Link} from "react-router-dom";
 
@@ -45,6 +43,7 @@ const Tutorials = () => {
         fetchDataQuery(query);
     };
 
+
     return (
         <>
             <Helmet>
@@ -71,7 +70,7 @@ const Tutorials = () => {
 
                         return (
                             <>
-                                <Link to={`/tutorial/${data.id}`}>
+                                <Link to={`/tutorial/${data.slug}`}>
                                     <div key={data.id} className="tutorial-card">
                                         <div className="tutorial-card-title">
                                             <h3>{data.title}</h3>
