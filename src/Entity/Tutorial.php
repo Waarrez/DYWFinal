@@ -53,6 +53,10 @@ class Tutorial
     #[Groups(["tutorials_read"])]
     private Collection $categories;
 
+    #[ORM\Column(type: Types::STRING)]
+    #[Groups(["tutorials_read"])]
+    private string $slug;
+
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
@@ -164,6 +168,18 @@ class Tutorial
         if ($this->categories->removeElement($category)) {
             $category->removeTutorial($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

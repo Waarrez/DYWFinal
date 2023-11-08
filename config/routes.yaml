@@ -17,3 +17,8 @@ app_routes:
     controller: App\Controller\ToolController::index
     requirements:
         any: '.+'
+
+tutorial_slug:
+    path: /api/tutorial/{slug}
+    controller: App\Controller\ToolController::getSlugTutorial
+    methods: GET

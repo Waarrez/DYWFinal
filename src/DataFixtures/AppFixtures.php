@@ -8,6 +8,7 @@ use App\Entity\Profile;
 use App\Entity\Subject;
 use App\Entity\Tutorial;
 use App\Entity\User;
+use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -24,8 +25,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        $slugify = new Slugify();
 
-        for ($u = 0; $u < 20; $u++) {
+        for ($u = 0; $u < 10; $u++) {
             $user = new User();
             $profile = new Profile();
 
@@ -44,38 +46,37 @@ class AppFixtures extends Fixture
             $manager->persist($user);
             $manager->persist($profile);
 
-            for ($c = 0; $c < 20; $c++) {
-                $tutorial = new Tutorial();
-                $commentary = new Commentary();
-                $category = new Category();
-                $subject = new Subject();
+            $tutorial = new Tutorial();
+            $commentary = new Commentary();
+            $category = new Category();
+            $subject = new Subject();
 
-                $category->setName("Catégorie n°$c")
-                    ->setContent("Contenu n° $c")
-                    ->setImage($faker->imageUrl());
+            $category->setName("Catégorie n°$u")
+                ->setContent("Contenu n° $u")
+                ->setImage($faker->imageUrl());
 
 
-                $tutorial->setTitle("Titre n°$c")
-                         ->setContent("Contenu n°$c")
-                         ->setUrl("www.youtube.com")
-                         ->addCommentary($commentary)
-                         ->addCategory($category);
+            $tutorial->setTitle("Titre n°$u")
+                     ->setContent("Contenu n°$u")
+                     ->setUrl("www.youtube.com")
+                     ->addCommentary($commentary)
+                     ->setSlug($slugify->slugify($tutorial->getTitle()))
+                     ->addCategory($category);
 
-                $commentary->addTutorial($tutorial)
-                           ->setContent("Commentaire n°$c")
-                           ->setUsers($user);
+            $commentary->addTutorial($tutorial)
+                       ->setContent("Commentaire n°$u")
+                       ->setUsers($user);
 
-                $subject->setTitle("Titre n°$c")
-                        ->setContent("Contenu n° $c")
-                        ->addCommentary($commentary)
-                        ->addCategory($category)
-                        ->setUsers($user);
+            $subject->setTitle("Titre n°$u")
+                    ->setContent("Contenu n° $u")
+                    ->addCommentary($commentary)
+                    ->addCategory($category)
+                    ->setUsers($user);
 
-                $manager->persist($tutorial);
-                $manager->persist($commentary);
-                $manager->persist($subject);
-                $manager->persist($category);
-            }
+            $manager->persist($tutorial);
+            $manager->persist($commentary);
+            $manager->persist($subject);
+            $manager->persist($category);
         }
 
 
